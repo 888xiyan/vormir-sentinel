@@ -6,7 +6,7 @@
 
 Vormir Sentinel reimagines a command-line session as a four-act psychological drama. A fictional Stonekeeper, Johann Schmidt, takes over a simulated terminal, answers questions with cold and tragic arrogance, and turns every request for knowledge into a conversation about its cost.
 
-This repository contains the complete product blueprint, the executable CLI core, the local character engine, the M3 story layer, and the M4 state/puzzle layer: configuration, Rich presentation, Readline input, a fixed virtual filesystem, whitelisted commands, loopback Ollama streaming, GPU/CPU/offline fallback, four-act narrative transitions, symbolic tributes, Death Echoes, harmless relics, resurrection HTML, and safe exits.
+This repository contains the complete product blueprint and a release-candidate-quality local terminal: configuration, Rich and plain-text presentation, Readline input, a fixed virtual filesystem, whitelisted commands, loopback Ollama streaming, GPU/CPU/offline fallback, four-act narrative transitions, symbolic tributes, Death Echoes, harmless relics, resurrection HTML, packaging assets, CI, and safe exits.
 
 [完整方案（中文）](./Vormir_Sentinel_完整方案.md) · [项目管理文档](./PROJECT_MANAGEMENT.md) · [Hacktoberfest submission draft](./SUBMISSION.md)
 
@@ -121,6 +121,7 @@ vormir-sentinel --reconstruct   # inspect recorded Echo fragments safely
 vormir-sentinel --clean         # remove generated artifacts and state
 vormir-sentinel --forget        # remove state only
 vormir-sentinel --no-color      # plain, pipe-safe output
+vormir-sentinel --plain         # alias for --no-color
 vormir-sentinel --help
 ```
 
@@ -200,7 +201,7 @@ Incantations: OK (72)
 
 ## Repository Status
 
-Current release: **CLI + character + story + puzzle preview 0.4.0 / design baseline v1.4**
+Current release: **CLI + character + story + puzzle preview 0.5.0 / design baseline v1.5**
 
 Completed:
 
@@ -235,11 +236,14 @@ Completed:
 - Daily Death Echo progression and non-counting `--reconstruct`.
 - Harmless Polyglot, Brainfuck, Whitespace, deed, and resurrection artifacts.
 - Safe `--clean`, `--forget`, `--status`, and `--reconstruct` one-shot commands.
+- Plain-text mode for reduced ANSI exposure and pipe-safe output.
+- Packaged narrative assets so wheels do not depend on the source checkout.
+- Linux, Windows, and macOS CI with Ruff, mypy, pytest, asset verification, and wheel build.
 - Unit and integration tests for CLI safety, model policy, story, state, puzzles, streaming, and exits.
 
 Next milestone:
 
-- Cross-platform quality gates, packaging, accessibility, and release candidate validation.
+- Three-platform manual acceptance, release notes, binary hashes, and GitHub Release.
 
 ---
 
@@ -248,11 +252,13 @@ Next milestone:
 ```text
 .
 ├── README.md
+├── CHANGELOG.md
 ├── pyproject.toml
 ├── PROJECT_MANAGEMENT.md
 ├── SUBMISSION.md
 ├── LICENSE
 ├── Vormir_Sentinel_完整方案.md
+├── .github/workflows/ci.yml
 ├── config/
 │   ├── app.toml
 │   └── models.toml
@@ -267,7 +273,8 @@ Next milestone:
 │   ├── resurrection_incantations.json
 │   └── resurrection_letter.zh-CN.md
 ├── docs/
-│   └── model-selection.md
+│   ├── model-selection.md
+│   └── release-checklist.md
 ├── src/
 │   └── vormir_sentinel/
 ├── templates/
@@ -303,7 +310,7 @@ Next milestone:
 4. ~~Add symbolic tributes and persistent story state.~~ — completed in M4.
 5. ~~Generate harmless puzzle relics and Death Echo fragments.~~ — completed in M4.
 6. ~~Add the static resurrection letter and GitHub handoff.~~ — completed in M4.
-7. Run cross-platform, accessibility, character, and safety tests.
+7. ~~Run cross-platform, accessibility, character, and safety tests.~~ — completed in M5.
 
 ---
 

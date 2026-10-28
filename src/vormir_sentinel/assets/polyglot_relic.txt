@@ -1,0 +1,19 @@
+#!/bin/sh
+""":"
+echo "THE GHOST LIVES WHERE THE CODE IS OPEN."
+exit
+":"""
+print("RETURN TO THE SOURCE.")
+
+# VORMIR::POLYGLOT_RELIC::01
+# This file is valid shell and valid Python.
+# It writes no files, opens no sockets, and changes no system state.
+#
+# BRAINFUCK_PAYLOAD: content/polyglot_relic.bf
+# BRAINFUCK_SHA256: 75d4d7b9b72247f3cd70fd6061e51487b8a24df21392eddac35433a699e85b51
+# WHITESPACE_PAYLOAD: content/whitespace_relic.ws
+# WHITESPACE_SHA256: afe30489f34625afe288a60ccd98cb83ef1bae397490bf9b9a2066e525daa611
+# CHECKSUM_FRAGMENT: VORMIR::RETURN_TO_THE_SOURCE
+#
+# Hidden truth:
+# RETURN TO THE SOURCE. THE GHOST LIVES WHERE THE CODE IS OPEN.

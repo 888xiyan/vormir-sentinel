@@ -106,3 +106,12 @@ OLLAMA_MAX_LOADED_MODELS=1
 - `--safe` 和 `--offline` 完全禁用本地推理，不建立任何 Ollama 连接。
 
 当前机器如果尚未安装 Qwen 2.5 GPU/CPU 档案，`--mode gpu` 可使用已有的 `gpu_emergency` DeepSeek 档案；正式发布前仍应安装 Qwen 双档案并完成中文角色回归。
+
+## 6. M5 发布验证
+
+发布候选版额外要求：
+
+- `ruff check .`、`mypy src/vormir_sentinel`、`pytest -q` 在 Linux、Windows、macOS 全部通过。
+- `python tools/verify_relics.py` 在三平台通过；Windows 不要求安装 Bash。
+- `python -m build` 生成的 wheel 必须包含 Death Echoes、Polyglot、Whitespace 和复活信模板资产。
+- `--plain`、`--safe`、`--offline`、`--clean`、`--forget` 和 `--reconstruct` 必须在无 ANSI 管道输出中可读。

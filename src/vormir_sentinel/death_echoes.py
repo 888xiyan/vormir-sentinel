@@ -9,7 +9,11 @@ from pathlib import Path
 
 from vormir_sentinel.state import ProgressState
 
-CONTENT_ROOT = Path(__file__).resolve().parents[2] / "content"
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PACKAGE_ROOT = Path(__file__).resolve().parent
+CONTENT_ROOT = (
+    PROJECT_ROOT / "content" if (PROJECT_ROOT / "content").exists() else PACKAGE_ROOT / "assets"
+)
 DEFAULT_ECHO_PATH = CONTENT_ROOT / "death_echoes.json"
 
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import unittest
 
-from vormir_sentinel.relics import RelicError, RelicGenerator, resolve_output_root
+from vormir_sentinel.relics import PACKAGE_ROOT, RelicError, RelicGenerator, resolve_output_root
 from vormir_sentinel.state import ProgressState
 
 
@@ -47,6 +47,13 @@ class RelicTests(unittest.TestCase):
             unrelated.unlink(missing_ok=True)
             if generator.output_root.exists():
                 generator.output_root.rmdir()
+
+    def test_packaged_assets_are_available_for_wheel_runtime(self) -> None:
+        assets = PACKAGE_ROOT / "assets"
+
+        self.assertTrue((assets / "death_echoes.json").exists())
+        self.assertTrue((assets / "polyglot_relic.txt").exists())
+        self.assertTrue((assets / "templates" / "resurrection.template.html").exists())
 
     def test_absolute_or_escaping_output_paths_are_rejected(self) -> None:
         with self.assertRaises(RelicError):

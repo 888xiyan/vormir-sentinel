@@ -90,6 +90,20 @@ class CliTests(unittest.TestCase):
 
         self.assertNotIn("\x1b[", output.getvalue())
 
+    def test_plain_alias_disables_ansi(self) -> None:
+        output = StringIO()
+        scripted = ScriptedInput(["help", "exit"])
+
+        main(
+            ["--offline", "--plain"],
+            stdout=output,
+            input_function=scripted,
+            state_store=self.state_store,
+        )
+
+        self.assertNotIn("\x1b[", output.getvalue())
+        self.assertIn("Vormir Sentinel", output.getvalue())
+
     def test_second_interrupt_always_exits(self) -> None:
         output = StringIO()
         interrupting = InterruptingInput()

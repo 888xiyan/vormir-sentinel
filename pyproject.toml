@@ -4,11 +4,12 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vormir-sentinel"
-version = "0.4.0"
+version = "0.5.0"
 description = "A local, fictional AI terminal experience about knowledge, sacrifice, and a ghost in the machine."
 readme = "README.md"
 requires-python = ">=3.11"
-license = { text = "MIT" }
+license = "MIT"
+license-files = ["LICENSE"]
 authors = [{ name = "888xiyan" }]
 keywords = ["cli", "interactive-fiction", "ai", "ollama", "arg"]
 dependencies = [
@@ -19,6 +20,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "mypy>=1.11",
+    "build>=1.2",
     "pytest>=8.2",
     "ruff>=0.7",
 ]
@@ -28,6 +30,9 @@ vormir-sentinel = "vormir_sentinel.cli:entrypoint"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+vormir_sentinel = ["assets/*", "assets/templates/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -67,8 +67,10 @@ def build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument(
         "--no-color",
+        "--plain",
+        dest="no_color",
         action="store_true",
-        help="disable ANSI color even on a capable terminal",
+        help="disable ANSI color and use plain-text presentation",
     )
     parser.add_argument(
         "--config",

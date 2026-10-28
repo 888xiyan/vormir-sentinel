@@ -11,9 +11,16 @@ from pathlib import Path
 from vormir_sentinel.state import ProgressState
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
+PACKAGE_ROOT = Path(__file__).resolve().parent
 OUTPUT_BASE = PROJECT_ROOT if (PROJECT_ROOT / "pyproject.toml").exists() else Path.cwd()
-CONTENT_ROOT = PROJECT_ROOT / "content"
-TEMPLATE_ROOT = PROJECT_ROOT / "templates"
+CONTENT_ROOT = (
+    PROJECT_ROOT / "content" if (PROJECT_ROOT / "content").exists() else PACKAGE_ROOT / "assets"
+)
+TEMPLATE_ROOT = (
+    PROJECT_ROOT / "templates"
+    if (PROJECT_ROOT / "templates").exists()
+    else PACKAGE_ROOT / "assets" / "templates"
+)
 GITHUB_URL = "https://github.com/888xiyan/vormir-sentinel"
 RELIC_NAMES = (
     "A_DEED_OF_SACRIFICE.txt",
