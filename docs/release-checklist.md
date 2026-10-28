@@ -13,7 +13,7 @@
 
 ## Manual acceptance
 
-- [ ] Linux first launch, second launch, `--safe`, and `--offline`.
+- [x] Linux first launch, second launch, `--safe`, and `--offline` — 2026-10-29.
 - [ ] macOS first launch, second launch, `--safe`, and `--offline`.
 - [ ] Windows first launch, second launch, `--safe`, and `--offline`.
 - [ ] GPU model when available; CPU model when available; offline fallback otherwise.

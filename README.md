@@ -204,7 +204,7 @@ Incantations: OK (72)
 
 Current release: **CLI + character + story + puzzle release candidate 0.5.0 / design baseline v1.6**
 
-Release materials: [CHANGELOG.md](./CHANGELOG.md) · [Release Notes](./RELEASE_NOTES.md) · [release checklist](./docs/release-checklist.md)
+Release materials: [CHANGELOG.md](./CHANGELOG.md) · [Release Notes](./RELEASE_NOTES.md) · [release checklist](./docs/release-checklist.md) · [Linux acceptance](./docs/acceptance-linux-2026-10-29.md)
 
 Completed:
 
