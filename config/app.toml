@@ -1,0 +1,31 @@
+# Vormir Sentinel runtime configuration.
+# This file controls presentation and fictional state only.
+
+[app]
+language = "zh-CN"
+safe_mode = false
+low_stimulation = false
+skip_installation_on_return = true
+
+[llm]
+# M2 uses this endpoint only when it resolves to loopback and inference is enabled.
+provider = "ollama"
+base_url = "http://127.0.0.1:11434"
+model = "qwen2.5:7b-instruct-q4_K_M"
+temperature = 0.85
+top_p = 0.90
+num_ctx = 8192
+stream = true
+
+[output]
+workspace = "./vormir-output"
+allow_desktop_output = false
+allow_overwrite = false
+
+[safety]
+# External networking is always forbidden. Local inference is limited to loopback
+# Ollama endpoints and can be disabled with --safe or --offline.
+allow_network = false
+allow_local_inference = true
+allow_filesystem_exploration = false
+allow_real_command_execution = false

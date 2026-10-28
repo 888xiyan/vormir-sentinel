@@ -6,7 +6,7 @@
 
 Vormir Sentinel reimagines a command-line session as a four-act psychological drama. A fictional Stonekeeper, Johann Schmidt, takes over a simulated terminal, answers questions with cold and tragic arrogance, and turns every request for knowledge into a conversation about its cost.
 
-This repository currently contains the complete product blueprint, safety model, prompt design, interaction architecture, and implementation roadmap for the first release.
+This repository contains the complete product blueprint, the executable CLI core, the local character engine, the M3 story layer, and the M4 state/puzzle layer: configuration, Rich presentation, Readline input, a fixed virtual filesystem, whitelisted commands, loopback Ollama streaming, GPU/CPU/offline fallback, four-act narrative transitions, symbolic tributes, Death Echoes, harmless relics, resurrection HTML, and safe exits.
 
 [完整方案（中文）](./Vormir_Sentinel_完整方案.md) · [项目管理文档](./PROJECT_MANAGEMENT.md) · [Hacktoberfest submission draft](./SUBMISSION.md)
 
@@ -91,6 +91,52 @@ No intercepted command is sent to the operating system.
 
 Hardware selection notes and runtime thresholds are documented in [docs/model-selection.md](./docs/model-selection.md). Machine-readable profiles live in [config/models.toml](./config/models.toml).
 
+## Quick Start (M1 CLI Core)
+
+The first executable milestones are available now. The fictional Vormir shell can route safe commands and, when enabled, stream dialogue from a **loopback-only** Ollama service. Remote networking is always rejected.
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate       # Windows: .venv\Scripts\activate
+python -m pip install -e .
+vormir-sentinel --safe
+```
+
+Equivalent module entry point:
+
+```bash
+python -m vormir_sentinel
+```
+
+Useful startup modes:
+
+```bash
+vormir-sentinel --mode auto     # GPU -> CPU -> offline based on local memory
+vormir-sentinel --mode gpu      # prefer the configured GPU profile
+vormir-sentinel --mode cpu      # prefer the configured CPU profile
+vormir-sentinel --mode offline  # fixed story responses; no Ollama request
+vormir-sentinel --safe          # offline, low-stimulation, directly controlled
+vormir-sentinel --status        # show local story progress and exit
+vormir-sentinel --reconstruct   # inspect recorded Echo fragments safely
+vormir-sentinel --clean         # remove generated artifacts and state
+vormir-sentinel --forget        # remove state only
+vormir-sentinel --no-color      # plain, pipe-safe output
+vormir-sentinel --help
+```
+
+Inside the terminal, `help` lists the fictional whitelist. `exit --now`, pressing `Ctrl+C` twice, or closing the window always leaves the program.
+
+Run the CLI test suite with:
+
+```bash
+python -m pip install -e ".[dev]"
+python -m pytest -q
+# Standard-library fallback:
+python -m unittest discover -s tests -v
+```
+
+---
+
 ## Open AI Architecture
 
 | Component | Planned implementation |
@@ -154,7 +200,7 @@ Incantations: OK (72)
 
 ## Repository Status
 
-Current release: **design and implementation blueprint v1.0**
+Current release: **CLI + character + story + puzzle preview 0.4.0 / design baseline v1.4**
 
 Completed:
 
@@ -171,15 +217,29 @@ Completed:
 - Complete Chapter 15, 16, and 17 text and puzzle assets.
 - Validated Brainfuck, Whitespace, and harmless Polyglot relics.
 - Static resurrection-letter template with 72 incantations.
+- Python package and `python -m vormir_sentinel` entry point.
+- Safe TOML configuration loading with non-negotiable security invariants.
+- Rich presentation with no-color and piped-output degradation.
+- In-memory Readline completion and history support.
+- Pure virtual path mapping and fixed pseudo-files.
+- Whitelisted `ls`, `cat`, `cd`, `whoami`, `uname`, and safe exit routing.
+- Windows command interception that never invokes a host shell.
+- Loopback-only Ollama HTTP client with NDJSON streaming.
+- GPU/CPU/offline profile catalog, memory policy, and model fallback.
+- Inspectable Stonekeeper System Prompt and role-drift post-processing.
+- Four-act boot, metamorphosis, ghost-shell, and fictional takeover transitions.
+- Safe Ctrl+C narrative responses that always expose a real exit.
+- Expanded fictional world commands: `id`, `date`, and `df -h`.
+- Versioned JSON state with atomic writes and safe recovery.
+- Five symbolic tribute types; no real secrets or files are requested.
+- Daily Death Echo progression and non-counting `--reconstruct`.
+- Harmless Polyglot, Brainfuck, Whitespace, deed, and resurrection artifacts.
+- Safe `--clean`, `--forget`, `--status`, and `--reconstruct` one-shot commands.
+- Unit and integration tests for CLI safety, model policy, story, state, puzzles, streaming, and exits.
 
 Next milestone:
 
-- Python CLI skeleton.
-- Ollama streaming client.
-- Vormir command router.
-- Main story state machine.
-- Death Echoes implementation.
-- Polyglot Relic and resurrection page.
+- Cross-platform quality gates, packaging, accessibility, and release candidate validation.
 
 ---
 
@@ -188,11 +248,13 @@ Next milestone:
 ```text
 .
 ├── README.md
+├── pyproject.toml
 ├── PROJECT_MANAGEMENT.md
 ├── SUBMISSION.md
 ├── LICENSE
 ├── Vormir_Sentinel_完整方案.md
 ├── config/
+│   ├── app.toml
 │   └── models.toml
 ├── content/
 │   ├── README.md
@@ -206,9 +268,26 @@ Next milestone:
 │   └── resurrection_letter.zh-CN.md
 ├── docs/
 │   └── model-selection.md
+├── src/
+│   └── vormir_sentinel/
 ├── templates/
 │   ├── resurrection.template.html
 │   └── resurrection.html
+├── tests/
+│   ├── test_character.py
+│   ├── test_cli.py
+│   ├── test_commands.py
+│   ├── test_config.py
+│   ├── test_death_echoes.py
+│   ├── test_dialogue.py
+│   ├── test_model_policy.py
+│   ├── test_ollama.py
+│   ├── test_relics.py
+│   ├── test_repl.py
+│   ├── test_state.py
+│   ├── test_story.py
+│   ├── test_tributes.py
+│   └── test_virtual_fs.py
 └── tools/
     ├── generate_content.py
     └── verify_relics.py
@@ -218,12 +297,12 @@ Next milestone:
 
 ## Roadmap
 
-1. Build the Python terminal shell and virtual command router.
-2. Connect Ollama with streaming output and offline fallback.
-3. Implement the four-act story and interrupt sequences.
-4. Add symbolic tributes and persistent story state.
-5. Generate harmless puzzle relics and Death Echo fragments.
-6. Add the static resurrection letter and GitHub handoff.
+1. ~~Build the Python terminal shell and virtual command router.~~ — completed in M1.
+2. ~~Connect Ollama with streaming output and offline fallback.~~ — completed in M2.
+3. ~~Implement the four-act story and interrupt sequences.~~ — completed in M3.
+4. ~~Add symbolic tributes and persistent story state.~~ — completed in M4.
+5. ~~Generate harmless puzzle relics and Death Echo fragments.~~ — completed in M4.
+6. ~~Add the static resurrection letter and GitHub handoff.~~ — completed in M4.
 7. Run cross-platform, accessibility, character, and safety tests.
 
 ---

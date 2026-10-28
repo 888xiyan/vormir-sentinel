@@ -92,3 +92,17 @@ OLLAMA_MAX_LOADED_MODELS=1
 3. GPU 不可用、驱动不兼容或模型加载失败时加载 CPU 3B。
 4. 内存可用量低于 2.5 GiB 时直接进入离线故事模式。
 5. Ollama 客户端/服务端版本不一致时显示诊断，但不阻断安全模式。
+
+## 5. M2 运行时实现
+
+当前 CLI 已实现以下选择与降级行为：
+
+- `--mode auto`：读取 `/proc/meminfo`、Windows `GlobalMemoryStatusEx` 或 POSIX 可用内存估算，不执行 `nvidia-smi`、`sysctl` 或其他宿主机诊断命令。
+- 可用内存低于 `2.5 GiB` 时进入固定离线故事模式。
+- 内存充足时优先尝试 `gpu_primary`，并保留 `gpu_emergency`；GPU 档案请求失败且尚未输出内容时自动重试 CPU 档案。
+- `--mode gpu` 与 `--mode cpu` 是显式优先级，不绕过安全边界。
+- Ollama `/api/tags` 用于确认已安装模型；模型缺失时直接降级到离线角色，不会伪造回答。
+- Ollama 请求只允许 `127.0.0.1`、`localhost` 或 `::1`，并禁用代理与重定向。
+- `--safe` 和 `--offline` 完全禁用本地推理，不建立任何 Ollama 连接。
+
+当前机器如果尚未安装 Qwen 2.5 GPU/CPU 档案，`--mode gpu` 可使用已有的 `gpu_emergency` DeepSeek 档案；正式发布前仍应安装 Qwen 双档案并完成中文角色回归。

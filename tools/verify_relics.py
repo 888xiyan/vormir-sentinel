@@ -43,9 +43,7 @@ def run_bf(source: str) -> str:
             tape[ptr] = (tape[ptr] - 1) % 256
         elif token == ".":
             output.append(chr(tape[ptr]))
-        elif token == "[" and tape[ptr] == 0:
-            pc = jumps[pc]
-        elif token == "]" and tape[ptr] != 0:
+        elif (token == "[" and tape[ptr] == 0) or (token == "]" and tape[ptr] != 0):
             pc = jumps[pc]
         pc += 1
     return "".join(output)

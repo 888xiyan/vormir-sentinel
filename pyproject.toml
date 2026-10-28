@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vormir-sentinel"
+version = "0.4.0"
+description = "A local, fictional AI terminal experience about knowledge, sacrifice, and a ghost in the machine."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "888xiyan" }]
+keywords = ["cli", "interactive-fiction", "ai", "ollama", "arg"]
+dependencies = [
+    "rich>=13.7",
+    "pyreadline3>=3.4; platform_system == 'Windows'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "mypy>=1.11",
+    "pytest>=8.2",
+    "ruff>=0.7",
+]
+
+[project.scripts]
+vormir-sentinel = "vormir_sentinel.cli:entrypoint"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+# The content generator stores long multilingual/artistic strings verbatim.
+extend-exclude = ["tools/generate_content.py"]
+
+[tool.ruff.lint]
+select = ["B", "E", "F", "I", "SIM", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["vormir_sentinel"]
