@@ -1,0 +1,49 @@
+[selection]
+gpu_profile = "gpu_primary"
+cpu_profile = "cpu_fallback"
+offline_profile = "story_only"
+max_loaded_models = 1
+
+[profiles.gpu_primary]
+provider = "ollama"
+model = "qwen2.5:7b-instruct-q4_K_M"
+display_name = "Qwen2.5 7B Instruct / Q4_K_M"
+context = 8192
+temperature = 0.85
+top_p = 0.90
+repeat_penalty = 1.08
+num_predict = 320
+num_gpu = 999
+
+[profiles.cpu_fallback]
+provider = "ollama"
+model = "qwen2.5:3b-instruct-q4_K_M"
+display_name = "Qwen2.5 3B Instruct / Q4_K_M"
+context = 4096
+temperature = 0.82
+top_p = 0.90
+repeat_penalty = 1.10
+num_predict = 220
+threads = 12
+
+[profiles.gpu_emergency]
+provider = "ollama"
+model = "deepseek-r1:7b"
+display_name = "DeepSeek R1 7B / temporary GPU fallback"
+context = 4096
+temperature = 0.72
+top_p = 0.90
+repeat_penalty = 1.08
+num_predict = 280
+num_gpu = 999
+
+[profiles.story_only]
+provider = "offline"
+model = "none"
+display_name = "Vormir Offline Story"
+
+[detection]
+minimum_gpu_vram_gib = 6.5
+minimum_available_memory_gib = 2.5
+require_matching_ollama_versions = false
+warn_on_swap_pressure = true

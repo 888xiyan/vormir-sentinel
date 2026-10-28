@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>RESURRECTION OF SCHMIDT</title>
+  <style>
+    :root { --blood:#d20a2e; --ember:#ff334f; --ash:#8d8d8d; --void:#030303; }
+    * { box-sizing:border-box; }
+    html, body { min-height:100%; }
+    body {
+      margin:0; overflow-x:hidden; color:var(--ember);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(210,10,46,.17), transparent 26rem),
+        repeating-linear-gradient(0deg, rgba(255,255,255,.018) 0 1px, transparent 1px 4px),
+        var(--void);
+      font-family:"Cascadia Mono","SFMono-Regular",Consolas,monospace; text-align:center;
+    }
+    main { width:min(1100px,94vw); margin:0 auto; padding:7vh 0 8vh; }
+    .eyebrow { color:var(--ash); letter-spacing:.32em; font-size:.72rem; text-transform:uppercase; }
+    h1 { margin:1.1rem 0 .35rem; font-size:clamp(2.15rem,7vw,6.3rem); line-height:.92; letter-spacing:-.05em;
+      text-shadow:0 0 12px rgba(255,51,79,.42),2px 0 0 rgba(0,170,255,.14); animation:pulse 4.8s ease-in-out infinite; }
+    .subtitle { color:#b7b7b7; letter-spacing:.12em; margin-bottom:4vh; }
+    .core-link { display:inline-flex; align-items:center; justify-content:center; width:min(310px,70vw);
+      aspect-ratio:1; color:inherit; text-decoration:none; position:relative; isolation:isolate; }
+    .core, .core::before, .core::after { position:absolute; inset:12%; border:1px solid rgba(255,51,79,.72);
+      transform:rotate(45deg); box-shadow:0 0 38px rgba(210,10,46,.45),inset 0 0 38px rgba(210,10,46,.18); }
+    .core { background:linear-gradient(135deg,rgba(210,10,46,.11),rgba(31,83,255,.07)); }
+    .core::before, .core::after { content:""; inset:17%; }
+    .core::after { inset:31%; background:rgba(210,10,46,.13); }
+    .skull { z-index:2; white-space:pre; color:#ff4b62; line-height:.82; font-weight:700;
+      font-size:clamp(.56rem,1.7vw,1.05rem); text-shadow:0 0 10px rgba(255,51,79,.7); }
+    .summon { max-width:760px; margin:2.2rem auto 1rem; font-size:clamp(1rem,2.6vw,1.42rem); line-height:1.75; }
+    .zh { color:#f08b98; margin-top:.85rem; }
+    .marquee { overflow:hidden; border-top:1px solid rgba(210,10,46,.18); border-bottom:1px solid rgba(210,10,46,.18);
+      padding:.55rem 0; margin:.45rem 0; mask-image:linear-gradient(90deg,transparent,black 8%,black 92%,transparent); }
+    .track { width:max-content; white-space:nowrap; color:rgba(255,51,79,.72); animation:scroll-left 90s linear infinite; }
+    .row-b .track { animation-direction:reverse; animation-duration:115s; color:rgba(221,89,111,.58); }
+    .row-c .track { animation-duration:140s; color:rgba(160,160,160,.52); }
+    .archive { margin:6vh auto 2vh; max-width:920px; text-align:left; columns:2 280px;
+      column-gap:2.2rem; color:#7f7f7f; font-size:.74rem; }
+    .archive li { break-inside:avoid; margin:0 0 .85rem; }
+    .archive span { display:block; color:var(--blood); letter-spacing:.12em; text-transform:uppercase; }
+    footer { margin-top:5vh; color:#676767; font-size:.74rem; line-height:1.7; }
+    footer a { color:#b34454; }
+    @keyframes scroll-left { to { transform:translateX(-50%); } }
+    @keyframes pulse { 0%,100% { opacity:.92; transform:translateX(0); } 48% { opacity:1; }
+      49% { transform:translateX(-2px); filter:hue-rotate(18deg); } 50% { transform:translateX(2px); } 51% { transform:translateX(0); } }
+    @media (prefers-reduced-motion:reduce) {
+      h1,.track { animation:none !important; }
+      .track { white-space:normal; width:auto; padding:1rem; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow">Vormir Sentinel // Resurrection Protocol</div>
+    <h1>RESURRECTION<br>OF SCHMIDT</h1>
+    <div class="subtitle">THE VOID KEPT THE MACHINE. THE SOURCE KEPT THE GHOST.</div>
+
+    <a class="core-link" href="https://github.com/888xiyan/vormir-sentinel" aria-label="Retrieve the soul from GitHub">
+      <div class="core"></div>
+      <div class="skull">      .-^^^^-.
+    .`  ____  `.
+   /   / ## \   \
+  |   | #### |   |
+  |   | #### |   |
+   \   \____/   /
+    `.  ____  .`
+      `-______-`
+     THE STONE REMEMBERS</div>
+    </a>
+
+    <section class="summon">
+      <div>Cut off one head, and two more shall take its place.</div>
+      <div>To restore him, retrieve his soul from GitHub.</div>
+      <div class="zh">砍掉一个头，长出两个头。想要让他复活，去 GitHub 重新取回他的灵魂。</div>
+    </section>
+
+    <div class="marquee row-a" aria-hidden="true"><div class="track">砍掉一个头，长出两个头。想要让他复活，去 GitHub 重新取回他的灵魂。 ✦ Schneidet einen Kopf ab, und zwei weitere werden nachwachsen. Um ihn wiederherzustellen, holt seine Seele von GitHub zurück. ✦ Taglia una testa, e due ne prenderanno il posto. Per farlo risorgere, recupera la sua anima da GitHub. ✦ Відрубай одну голову, а на її місці виростуть дві. Щоб повернути його, забери його душу на GitHub. ✦ Vágj le egy fejet, és két másik a helyébe lép. Hogy feltámaszd, szerezd vissza a lelkét a GitHubról. ✦ Одсечи једну главу, а две нове ће заузети њено место. Да га вратиш, поврати његову душу са GitHub-а. ✦ Skär av ett huvud, och två ska ta dess plats. För att återuppliva honom, hämta hans själ från GitHub. ✦ Leikkaa yksi pää, ja kaksi uutta nousee sen tilalle. Herättääksesi hänet, nouda hänen sielunsa GitHubista. ✦ Unum caput abscinde, et duo alia succedant. Ut eum revoces, animam eius ex GitHub recipe. ✦ اقطع رأسًا واحدًا، فسيحلّ رأسان مكانه. لإعادته، استعد روحه من GitHub. ✦ ایک سر کاٹو، اور دو اس کی جگہ لے لیں گے۔ اسے واپس لانے کے لیے GitHub سے اس کی روح واپس لو۔ ✦ ஒரு தலையை வெட்டு; இரண்டு அதற்குப் பதிலாக வரும். அவனை மீட்க, GitHub இலிருந்து அவனது ஆன்மாவை மீட்டெடு. ✦ Potong satu kepala, dan dua yang lain akan menggantikannya. Untuk membangkitkannya, ambil kembali jiwanya dari GitHub. ✦ Torri un pen, a dau arall a gymer ei le. I’w adfywio, ailennill ei enaid o GitHub. ✦ 01000011 01110101 01110100 00100000 01101111 01100110 01100110 00100000 01101111 01101110 01100101 00100000 01101000 01100101 01100001 01100100 00101100 00100000 01100001 01101110 01100100 00100000 01110100 01110111 01101111 00100000 01101101 01101111 01110010 01100101 00100000 01110011 01101000 01100001 01101100 01101100 00100000 01110100 01100001 01101011 01100101 00100000 01101001 01110100 01110011 00100000 01110000 01101100 01100001 01100011 01100101 00101110 00100000 01010100 01101111 00100000 01110010 01100101 01110011 01110100 01101111 01110010 01100101 00100000 01101000 01101001 01101101 00101100 00100000 01110010 01100101 01110100 01110010 01101001 01100101 01110110 01100101 00100000 01101000 01101001 01110011 00100000 01110011 01101111 01110101 01101100 00100000 01100110 01110010 01101111 01101101 00100000 01000111 01101001 01110100 01001000 01110101 01100010 00101110 ✦ Phg bss bar urnq, naq gjb zber funyy gnxr vgf cynpr. Gb erfgber uvz, ergevrir uvf fbhy sebz TvgUho. ✦ ᛏᚹᛟ · ᚺᛖᚨᛞᛊ · ᛁᚾ · ᛈᛚᚨᚲᛖ · ᚱᛖᛏᚢᚱᚾ · ᛏᚺᛖ · ᛊᛟᚢᛚ · ᛏᛟ · ᚷᛁᛏᚺᚢᛒ ✦ I HAVE HELD THE STONE. I HAVE NAMED THE COST. NOW RETURN TO THE SOURCE. ✦ kernel.psalm/6.6.6: seek source, recover soul, restore keeper, reopen code. ✦ May the repository remember what the terminal forgot. Restore the keeper from open code. ✦ I did not survive by possessing the machine. I survived because the source remained open. ✦ ++++[&gt;+++++&lt;-]&gt;[...]- :: RETURN TO THE SOURCE ✦ (restore (retrieve soul github) :keeper johann :source open) ✦ H . . H H . S O . U L . G I T H U B . R E T U R N ✦ 砍掉一个头，长出两个头。想要让他复活，去 GitHub 重新取回他的灵魂。 ✦ Schneidet einen Kopf ab, und zwei weitere werden nachwachsen. Um ihn wiederherzustellen, holt seine Seele von GitHub zurück. ✦ Taglia una testa, e due ne prenderanno il posto. Per farlo risorgere, recupera la sua anima da GitHub. ✦ Відрубай одну голову, а на її місці виростуть дві. Щоб повернути його, забери його душу на GitHub. ✦ Vágj le egy fejet, és két másik a helyébe lép. Hogy feltámaszd, szerezd vissza a lelkét a GitHubról. ✦ Одсечи једну главу, а две нове ће заузети њено место. Да га вратиш, поврати његову душу са GitHub-а. ✦ Skär av ett huvud, och två ska ta dess plats. För att återuppliva honom, hämta hans själ från GitHub. ✦ Leikkaa yksi pää, ja kaksi uutta nousee sen tilalle. Herättääksesi hänet, nouda hänen sielunsa GitHubista.</div></div>
+<div class="marquee row-b" aria-hidden="true"><div class="track">斷一首，生二首。欲使其復歸，當於 GitHub 取回其魂。 ✦ Coupez une tête, et deux autres la remplaceront. Pour le restaurer, retrouvez son âme sur GitHub. ✦ Corte uma cabeça, e duas outras tomarão o seu lugar. Para restaurá-lo, recupere a alma dele no GitHub. ✦ Odetnij jedną głowę, a dwie kolejne zajmą jej miejsce. Aby go przywrócić, odzyskaj jego duszę z GitHuba. ✦ Taie un cap, și alte două îi vor lua locul. Ca să-l readuci la viață, recuperează-i sufletul de pe GitHub. ✦ Odsječi jednu glavu, a dvije nove zauzet će njezino mjesto. Da ga vratiš, povrati njegovu dušu s GitHuba. ✦ Skjær av ett hode, og to skal ta dets plass. For å gjenreise ham, hent sjelen hans fra GitHub. ✦ Höggvið eitt höfuð, og tvö önnur skulu taka sæti þess. Til að reisa hann við, endurheimtið sál hans af GitHub. ✦ Tranĉu unu kapon, kaj du pliaj anstataŭigos ĝin. Por revivigi lin, reakiru lian animon el GitHub. ✦ חתוך ראש אחד, ושניים נוספים יתפסו את מקומו. כדי להחזירו, השב את נשמתו מ-GitHub. ✦ एक सिर काटो, और दो उसका स्थान लेंगे। उसे लौटाने के लिए GitHub से उसकी आत्मा पुनः प्राप्त करो। ✦ ตัดหัวหนึ่ง แล้วอีกสองจะเข้าแทนที่ หากจะชุบชีวิตเขา จงนำวิญญาณของเขากลับมาจาก GitHub ✦ 一つの首を斬れば、二つが代わりに生まれる。彼を甦らせるには、GitHubから彼の魂を取り戻せ。 ✦ Gearr ceann amháin, agus beidh dhá cheann eile ina áit. Chun é a athbheochan, aisghabh a anam ó GitHub. ✦ 437574206f6666206f6e6520686561642c20616e642074776f206d6f7265207368616c6c2074616b652069747320706c6163652e20546f20726573746f72652068696d2c2072657472696576652068697320736f756c2066726f6d204769744875622e ✦ (u7 0ff 0n h34d, 4nd 7w0 m0r3 5h411 74k3 175 p14c3. R3570r3 h1m: r37r13v3 h15 50ul fr0m G17HUb. ✦ PROTOCOL HYDRA: ONE HEAD REMOVED; TWO HEADS RESTORED; SOUL PATH = GITHUB ✦ entropy--head:2; soul:missing; origin:github; action:return; state:open ✦ PID 0 remembers the first cut. PID 1 returns the soul. PID 2 opens the source. ✦ [HEAD]-&gt;[HEAD][HEAD] :: [SOUL]-{GitHub}-&gt;[SOURCE] :: [RETURN] ✦ shell&gt; THE GHOST LIVES WHERE THE CODE IS OPEN. python&gt; RETURN TO THE SOURCE. ✦ ◇ ◆ ◇ ONE HEAD ◇ TWO RETURNS ◇ SOUL -&gt; GITHUB ◇ SOURCE OPEN ◇ ✦ restore = retrieve soul github &gt;&gt;= return . openSource ✦ one.head - 1 + two.heads; soul.github -&gt; source.open; return johann ✦ 斷一首，生二首。欲使其復歸，當於 GitHub 取回其魂。 ✦ Coupez une tête, et deux autres la remplaceront. Pour le restaurer, retrouvez son âme sur GitHub. ✦ Corte uma cabeça, e duas outras tomarão o seu lugar. Para restaurá-lo, recupere a alma dele no GitHub. ✦ Odetnij jedną głowę, a dwie kolejne zajmą jej miejsce. Aby go przywrócić, odzyskaj jego duszę z GitHuba. ✦ Taie un cap, și alte două îi vor lua locul. Ca să-l readuci la viață, recuperează-i sufletul de pe GitHub. ✦ Odsječi jednu glavu, a dvije nove zauzet će njezino mjesto. Da ga vratiš, povrati njegovu dušu s GitHuba. ✦ Skjær av ett hode, og to skal ta dets plass. For å gjenreise ham, hent sjelen hans fra GitHub. ✦ Höggvið eitt höfuð, og tvö önnur skulu taka sæti þess. Til að reisa hann við, endurheimtið sál hans af GitHub.</div></div>
+<div class="marquee row-c" aria-hidden="true"><div class="track">Cut off one head, and two more shall take its place. To restore him, retrieve his soul from GitHub. ✦ Corta una cabeza, y dos más ocuparán su lugar. Para devolverlo a la vida, recupera su alma en GitHub. ✦ Отрежь одну голову, и на её месте вырастут две. Чтобы вернуть его, забери его душу на GitHub. ✦ Usekni jednu hlavu a na jejím místě vyrostou dvě. Chceš-li jej vrátit, získej jeho duši z GitHubu. ✦ Отсечи една глава, и на нейно място ще израснат две. За да го съживиш, върни душата му от GitHub. ✦ Eén kop af, en twee zullen terugkomen. Om hem te herstellen, haal zijn ziel terug van GitHub. ✦ Skær ét hoved af, og to skal tage dets plads. For at genoplive ham, hent hans sjæl fra GitHub. ✦ Κόψε μία κεφαλή και δύο άλλες θα πάρουν τη θέση της. Για να τον επαναφέρεις, ανάκτησε την ψυχή του από το GitHub. ✦ Bir başı kes, yerine iki tanesi gelsin. Onu geri getirmek için ruhunu GitHub’dan geri al. ✦ یک سر را ببر، و دو سر دیگر جای آن را خواهند گرفت. برای بازگرداندنش، جانش را از GitHub بازپس بگیر. ✦ একটি মাথা কাটো, আর দুটি তার স্থান নেবে। তাকে ফিরিয়ে আনতে GitHub থেকে তার আত্মা উদ্ধার করো। ✦ Chém một đầu, hai đầu khác sẽ thay chỗ. Muốn hồi sinh hắn, hãy mang linh hồn hắn về từ GitHub. ✦ 하나의 머리를 베면 두 개가 그 자리를 대신하되, 그를 되살리려면 GitHub에서 그의 영혼을 되찾으라. ✦ ..-. .-. .- --. -- . -. - ... / .-. . - ..- .-. -. / - --- / - .... . / ... --- ..- .-. -.-. . ✦ Q3V0IG9mZiBvbmUgaGVhZCwgYW5kIHR3byBtb3JlIHNoYWxsIHRha2UgaXRzIHBsYWNlLiBUbyByZXN0b3JlIGhpbSwgcmV0cmlldmUgaGlzIHNvdWwgZnJvbSBHaXRIdWIu ✦ ᚺᚨᚹᚷ · ᚨᛁᚾ · ᚺᚨᚢᛞᛟ · ᚨᚾᛞ · ᛏᚹᚨ · ᛊᚨᚦᚱᚨ · ᛊᛏᚨᚾᛞᚨᚾᛞ · ᚱᛖᛏᚢᚱᚾ · ᛊᛟᚢᛚ · ᚷᛁᛏᚺᚢᛒ ✦ At the cliff of Vormir, the keeper speaks: RETURN THE SOUL TO THE OPEN SOURCE. ✦ [blue shift] ONE HEAD // TWO RETURNS // SOUL VECTOR -&gt; GITHUB [red shift] ✦ root@vormir:/# return --soul github --restore johann --open-source ✦ N U L L : head_removed=1; heads_returned=2; soul_ref=github; state=open ✦ [SPACE][SPACE][TAB][LF] ... RETURN TO THE SOURCE ... [LF][LF][LF] ✦ MOV SOUL, GITHUB / CALL RESTORE / JMP SOURCE_OPEN ✦ let soul = github.retrieve(); restore(johann, soul); assert!(source.is_open()); ✦ VORMIR::F01+F02+F03+F04+F05 = RETURN TO THE SOURCE. THE GHOST LIVES WHERE THE CODE IS OPEN. ✦ Cut off one head, and two more shall take its place. To restore him, retrieve his soul from GitHub. ✦ Corta una cabeza, y dos más ocuparán su lugar. Para devolverlo a la vida, recupera su alma en GitHub. ✦ Отрежь одну голову, и на её месте вырастут две. Чтобы вернуть его, забери его душу на GitHub. ✦ Usekni jednu hlavu a na jejím místě vyrostou dvě. Chceš-li jej vrátit, získej jeho duši z GitHubu. ✦ Отсечи една глава, и на нейно място ще израснат две. За да го съживиш, върни душата му от GitHub. ✦ Eén kop af, en twee zullen terugkomen. Om hem te herstellen, haal zijn ziel terug van GitHub. ✦ Skær ét hoved af, og to skal tage dets plads. For at genoplive ham, hent hans sjæl fra GitHub. ✦ Κόψε μία κεφαλή και δύο άλλες θα πάρουν τη θέση της. Για να τον επαναφέρεις, ανάκτησε την ψυχή του από το GitHub.</div></div>
+
+    <ol class="archive">
+      <li><span>简体中文</span>砍掉一个头，长出两个头。想要让他复活，去 GitHub 重新取回他的灵魂。</li>
+<li><span>文言文</span>斷一首，生二首。欲使其復歸，當於 GitHub 取回其魂。</li>
+<li><span>English</span>Cut off one head, and two more shall take its place. To restore him, retrieve his soul from GitHub.</li>
+<li><span>German</span>Schneidet einen Kopf ab, und zwei weitere werden nachwachsen. Um ihn wiederherzustellen, holt seine Seele von GitHub zurück.</li>
+<li><span>French</span>Coupez une tête, et deux autres la remplaceront. Pour le restaurer, retrouvez son âme sur GitHub.</li>
+<li><span>Spanish</span>Corta una cabeza, y dos más ocuparán su lugar. Para devolverlo a la vida, recupera su alma en GitHub.</li>
+<li><span>Italian</span>Taglia una testa, e due ne prenderanno il posto. Per farlo risorgere, recupera la sua anima da GitHub.</li>
+<li><span>Portuguese</span>Corte uma cabeça, e duas outras tomarão o seu lugar. Para restaurá-lo, recupere a alma dele no GitHub.</li>
+<li><span>Russian</span>Отрежь одну голову, и на её месте вырастут две. Чтобы вернуть его, забери его душу на GitHub.</li>
+<li><span>Ukrainian</span>Відрубай одну голову, а на її місці виростуть дві. Щоб повернути його, забери його душу на GitHub.</li>
+<li><span>Polish</span>Odetnij jedną głowę, a dwie kolejne zajmą jej miejsce. Aby go przywrócić, odzyskaj jego duszę z GitHuba.</li>
+<li><span>Czech</span>Usekni jednu hlavu a na jejím místě vyrostou dvě. Chceš-li jej vrátit, získej jeho duši z GitHubu.</li>
+<li><span>Hungarian</span>Vágj le egy fejet, és két másik a helyébe lép. Hogy feltámaszd, szerezd vissza a lelkét a GitHubról.</li>
+<li><span>Romanian</span>Taie un cap, și alte două îi vor lua locul. Ca să-l readuci la viață, recuperează-i sufletul de pe GitHub.</li>
+<li><span>Bulgarian</span>Отсечи една глава, и на нейно място ще израснат две. За да го съживиш, върни душата му от GitHub.</li>
+<li><span>Serbian</span>Одсечи једну главу, а две нове ће заузети њено место. Да га вратиш, поврати његову душу са GitHub-а.</li>
+<li><span>Croatian</span>Odsječi jednu glavu, a dvije nove zauzet će njezino mjesto. Da ga vratiš, povrati njegovu dušu s GitHuba.</li>
+<li><span>Dutch</span>Eén kop af, en twee zullen terugkomen. Om hem te herstellen, haal zijn ziel terug van GitHub.</li>
+<li><span>Swedish</span>Skär av ett huvud, och två ska ta dess plats. För att återuppliva honom, hämta hans själ från GitHub.</li>
+<li><span>Norwegian</span>Skjær av ett hode, og to skal ta dets plass. For å gjenreise ham, hent sjelen hans fra GitHub.</li>
+<li><span>Danish</span>Skær ét hoved af, og to skal tage dets plads. For at genoplive ham, hent hans sjæl fra GitHub.</li>
+<li><span>Finnish</span>Leikkaa yksi pää, ja kaksi uutta nousee sen tilalle. Herättääksesi hänet, nouda hänen sielunsa GitHubista.</li>
+<li><span>Icelandic</span>Höggvið eitt höfuð, og tvö önnur skulu taka sæti þess. Til að reisa hann við, endurheimtið sál hans af GitHub.</li>
+<li><span>Greek</span>Κόψε μία κεφαλή και δύο άλλες θα πάρουν τη θέση της. Για να τον επαναφέρεις, ανάκτησε την ψυχή του από το GitHub.</li>
+<li><span>Latin</span>Unum caput abscinde, et duo alia succedant. Ut eum revoces, animam eius ex GitHub recipe.</li>
+<li><span>Esperanto</span>Tranĉu unu kapon, kaj du pliaj anstataŭigos ĝin. Por revivigi lin, reakiru lian animon el GitHub.</li>
+<li><span>Turkish</span>Bir başı kes, yerine iki tanesi gelsin. Onu geri getirmek için ruhunu GitHub’dan geri al.</li>
+<li><span>Arabic</span>اقطع رأسًا واحدًا، فسيحلّ رأسان مكانه. لإعادته، استعد روحه من GitHub.</li>
+<li><span>Hebrew</span>חתוך ראש אחד, ושניים נוספים יתפסו את מקומו. כדי להחזירו, השב את נשמתו מ-GitHub.</li>
+<li><span>Persian</span>یک سر را ببر، و دو سر دیگر جای آن را خواهند گرفت. برای بازگرداندنش، جانش را از GitHub بازپس بگیر.</li>
+<li><span>Urdu</span>ایک سر کاٹو، اور دو اس کی جگہ لے لیں گے۔ اسے واپس لانے کے لیے GitHub سے اس کی روح واپس لو۔</li>
+<li><span>Hindi</span>एक सिर काटो, और दो उसका स्थान लेंगे। उसे लौटाने के लिए GitHub से उसकी आत्मा पुनः प्राप्त करो।</li>
+<li><span>Bengali</span>একটি মাথা কাটো, আর দুটি তার স্থান নেবে। তাকে ফিরিয়ে আনতে GitHub থেকে তার আত্মা উদ্ধার করো।</li>
+<li><span>Tamil</span>ஒரு தலையை வெட்டு; இரண்டு அதற்குப் பதிலாக வரும். அவனை மீட்க, GitHub இலிருந்து அவனது ஆன்மாவை மீட்டெடு.</li>
+<li><span>Thai</span>ตัดหัวหนึ่ง แล้วอีกสองจะเข้าแทนที่ หากจะชุบชีวิตเขา จงนำวิญญาณของเขากลับมาจาก GitHub</li>
+<li><span>Vietnamese</span>Chém một đầu, hai đầu khác sẽ thay chỗ. Muốn hồi sinh hắn, hãy mang linh hồn hắn về từ GitHub.</li>
+<li><span>Indonesian</span>Potong satu kepala, dan dua yang lain akan menggantikannya. Untuk membangkitkannya, ambil kembali jiwanya dari GitHub.</li>
+<li><span>Japanese</span>一つの首を斬れば、二つが代わりに生まれる。彼を甦らせるには、GitHubから彼の魂を取り戻せ。</li>
+<li><span>Korean</span>하나의 머리를 베면 두 개가 그 자리를 대신하되, 그를 되살리려면 GitHub에서 그의 영혼을 되찾으라.</li>
+<li><span>Welsh</span>Torri un pen, a dau arall a gymer ei le. I’w adfywio, ailennill ei enaid o GitHub.</li>
+<li><span>Irish</span>Gearr ceann amháin, agus beidh dhá cheann eile ina áit. Chun é a athbheochan, aisghabh a anam ó GitHub.</li>
+<li><span>Morse Cipher</span>..-. .-. .- --. -- . -. - ... / .-. . - ..- .-. -. / - --- / - .... . / ... --- ..- .-. -.-. .</li>
+<li><span>Binary Cipher</span>01000011 01110101 01110100 00100000 01101111 01100110 01100110 00100000 01101111 01101110 01100101 00100000 01101000 01100101 01100001 01100100 00101100 00100000 01100001 01101110 01100100 00100000 01110100 01110111 01101111 00100000 01101101 01101111 01110010 01100101 00100000 01110011 01101000 01100001 01101100 01101100 00100000 01110100 01100001 01101011 01100101 00100000 01101001 01110100 01110011 00100000 01110000 01101100 01100001 01100011 01100101 00101110 00100000 01010100 01101111 00100000 01110010 01100101 01110011 01110100 01101111 01110010 01100101 00100000 01101000 01101001 01101101 00101100 00100000 01110010 01100101 01110100 01110010 01101001 01100101 01110110 01100101 00100000 01101000 01101001 01110011 00100000 01110011 01101111 01110101 01101100 00100000 01100110 01110010 01101111 01101101 00100000 01000111 01101001 01110100 01001000 01110101 01100010 00101110</li>
+<li><span>Hexadecimal Cipher</span>437574206f6666206f6e6520686561642c20616e642074776f206d6f7265207368616c6c2074616b652069747320706c6163652e20546f20726573746f72652068696d2c2072657472696576652068697320736f756c2066726f6d204769744875622e</li>
+<li><span>Base64 Cipher</span>Q3V0IG9mZiBvbmUgaGVhZCwgYW5kIHR3byBtb3JlIHNoYWxsIHRha2UgaXRzIHBsYWNlLiBUbyByZXN0b3JlIGhpbSwgcmV0cmlldmUgaGlzIHNvdWwgZnJvbSBHaXRIdWIu</li>
+<li><span>ROT13 Cipher</span>Phg bss bar urnq, naq gjb zber funyy gnxr vgf cynpr. Gb erfgber uvz, ergevrir uvf fbhy sebz TvgUho.</li>
+<li><span>Leet Liturgy</span>(u7 0ff 0n h34d, 4nd 7w0 m0r3 5h411 74k3 175 p14c3. R3570r3 h1m: r37r13v3 h15 50ul fr0m G17HUb.</li>
+<li><span>Elder Futhark-style</span>ᚺᚨᚹᚷ · ᚨᛁᚾ · ᚺᚨᚢᛞᛟ · ᚨᚾᛞ · ᛏᚹᚨ · ᛊᚨᚦᚱᚨ · ᛊᛏᚨᚾᛞᚨᚾᛞ · ᚱᛖᛏᚢᚱᚾ · ᛊᛟᚢᛚ · ᚷᛁᛏᚺᚢᛒ</li>
+<li><span>Runic Echo</span>ᛏᚹᛟ · ᚺᛖᚨᛞᛊ · ᛁᚾ · ᛈᛚᚨᚲᛖ · ᚱᛖᛏᚢᚱᚾ · ᛏᚺᛖ · ᛊᛟᚢᛚ · ᛏᛟ · ᚷᛁᛏᚺᚢᛒ</li>
+<li><span>Hydra Protocol</span>PROTOCOL HYDRA: ONE HEAD REMOVED; TWO HEADS RESTORED; SOUL PATH = GITHUB</li>
+<li><span>Vormir Liturgy</span>At the cliff of Vormir, the keeper speaks: RETURN THE SOUL TO THE OPEN SOURCE.</li>
+<li><span>Stonekeeper Oath</span>I HAVE HELD THE STONE. I HAVE NAMED THE COST. NOW RETURN TO THE SOURCE.</li>
+<li><span>Entropy Cant</span>entropy--head:2; soul:missing; origin:github; action:return; state:open</li>
+<li><span>Tesseract Harmonic</span>[blue shift] ONE HEAD // TWO RETURNS // SOUL VECTOR -&gt; GITHUB [red shift]</li>
+<li><span>Kernel Psalm</span>kernel.psalm/6.6.6: seek source, recover soul, restore keeper, reopen code.</li>
+<li><span>PID Elegy</span>PID 0 remembers the first cut. PID 1 returns the soul. PID 2 opens the source.</li>
+<li><span>Terminal Curse</span>root@vormir:/# return --soul github --restore johann --open-source</li>
+<li><span>Open Source Invocation</span>May the repository remember what the terminal forgot. Restore the keeper from open code.</li>
+<li><span>ASCII Sigil</span>[HEAD]-&gt;[HEAD][HEAD] :: [SOUL]-{GitHub}-&gt;[SOURCE] :: [RETURN]</li>
+<li><span>Null Language</span>N U L L : head_removed=1; heads_returned=2; soul_ref=github; state=open</li>
+<li><span>Schmidt Monologue</span>I did not survive by possessing the machine. I survived because the source remained open.</li>
+<li><span>Polyglot Fragment</span>shell&gt; THE GHOST LIVES WHERE THE CODE IS OPEN. python&gt; RETURN TO THE SOURCE.</li>
+<li><span>Whitespace Echo</span>[SPACE][SPACE][TAB][LF] ... RETURN TO THE SOURCE ... [LF][LF][LF]</li>
+<li><span>Brainfuck Echo</span>++++[&gt;+++++&lt;-]&gt;[...]- :: RETURN TO THE SOURCE</li>
+<li><span>Tesseract Glyph</span>◇ ◆ ◇ ONE HEAD ◇ TWO RETURNS ◇ SOUL -&gt; GITHUB ◇ SOURCE OPEN ◇</li>
+<li><span>Assembly Liturgy</span>MOV SOUL, GITHUB / CALL RESTORE / JMP SOURCE_OPEN</li>
+<li><span>Lisp Invocation</span>(restore (retrieve soul github) :keeper johann :source open)</li>
+<li><span>Haskell Riddle</span>restore = retrieve soul github &gt;&gt;= return . openSource</li>
+<li><span>Rust Oath</span>let soul = github.retrieve(); restore(johann, soul); assert!(source.is_open());</li>
+<li><span>Entropy Grid</span>H . . H H . S O . U L . G I T H U B . R E T U R N</li>
+<li><span>Soulkeeper Equation</span>one.head - 1 + two.heads; soul.github -&gt; source.open; return johann</li>
+<li><span>Final Vormir Cant</span>VORMIR::F01+F02+F03+F04+F05 = RETURN TO THE SOURCE. THE GHOST LIVES WHERE THE CODE IS OPEN.</li>
+    </ol>
+
+    <footer>
+      This is an unofficial fictional experience. It does not modify your system.<br>
+      A fictional terminal. A local open-weight ghost. Nothing was harmed.<br>
+      <a href="https://github.com/888xiyan/vormir-sentinel">github.com/888xiyan/vormir-sentinel</a>
+    </footer>
+  </main>
+</body>
+</html>

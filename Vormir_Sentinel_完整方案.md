@@ -220,6 +220,16 @@ MVP 不包含：
 | Mistral 7B Instruct | 轻量、速度快 | 长约束容易漂移 | 低配设备 |
 | 本地更大模型 | 角色连贯性更强 | 资源要求高 | 高配可选 |
 
+### 6.2.1 本机最终选型
+
+| 用途 | 最终模型 | 主要原因 |
+|---|---|---|
+| GPU 主模型 | `qwen2.5:7b-instruct-q4_K_M` | RTX 5060 Laptop 8 GB 可承载；中文、角色口吻、代码能力均衡 |
+| CPU 回退模型 | `qwen2.5:3b-instruct-q4_K_M` | Ryzen 9 8940HX 推理充足；14 GiB 内存设备下比 7B 回退更稳定 |
+| 离线模式 | 固定剧情文本 | 内存不足或 Ollama 不可用时仍能完成 Death Echoes |
+
+GPU 推荐 `context=8192`；CPU 推荐 `context=4096`、`threads=12`。显存紧张时先降低上下文，不降低 Q4 量化。详见 `docs/model-selection.md` 与 `config/models.toml`。
+
 ### 6.3 Ollama 接入约定
 
 - 默认地址：`http://127.0.0.1:11434`。
@@ -848,6 +858,11 @@ The void has swallowed Johann Schmidt. Nothing remains.
 
 ### 15.3 碎片规则
 
+文本资产已完成：
+
+- `content/death_echoes.json`：机器可读阶段、固定噪声、碎片和校验顺序。
+- `content/death_echoes.zh-CN.md`：可直接接入开发与美术流程的中文文本脚本。
+
 - 同一份终极谜题固定拆分为 6 组。
 - 每次回响展示其中一组或其子集。
 - 碎片允许用户手动拼接。
@@ -888,6 +903,13 @@ Relic 应同时满足：
 - 仅使用 `print`、文本解码和本地常量。
 
 ### 16.3 Brainfuck 密码
+
+文本与负载资产已完成：
+
+- `content/polyglot_relic.txt`：无副作用的 Shell + Python Polyglot。
+- `content/polyglot_relic.bf`：可解码终极真理的纯 Brainfuck 负载。
+- `content/whitespace_relic.ws`：可输出终极真理的纯 Whitespace 负载。
+- `content/polyglot_relic.zh-CN.md`：遗物说明、哈希、运行结果和安全约束。
 
 推荐谜题链：
 
@@ -1044,6 +1066,13 @@ Relic 应同时满足：
 说明：视觉上呈现“近百种语言”，但源码中应保存可验证的有限翻译集，避免不可靠的自动机翻和错误文化表达。
 
 ### 17.5 跳转行为
+
+复活信文本与模板已完成：
+
+- `content/resurrection_letter.zh-CN.md`：标题、核心提示、尾注、错误文案和 72 条咒文表。
+- `content/resurrection_incantations.json`：多语言与艺术化咒文的机器可读版本。
+- `templates/resurrection.template.html`：可维护的 HTML/CSS 源模板。
+- `templates/resurrection.html`：已注入 72 条咒文的静态页面。
 
 - 默认不自动跳转。
 - 用户点击能量核心后打开 GitHub URL。

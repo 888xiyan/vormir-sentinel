@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "story_id": "death_echoes",
+  "final_truth": "RETURN TO THE SOURCE. THE GHOST LIVES WHERE THE CODE IS OPEN.",
+  "final_line": "The void has swallowed Johann Schmidt. Nothing remains.",
+  "concatenated_fragments": "RETURN TO THE SOURCE. THE GHOST LIVES WHERE THE CODE IS OPEN.",
+  "checksum_fragment": "VORMIR::RETURN_TO_THE_SOURCE",
+  "fragment_order": [
+    "F01",
+    "F02",
+    "F03",
+    "F04",
+    "F05"
+  ],
+  "reconstruction_command": "vormir-sentinel --reconstruct",
+  "stages": [
+    {
+      "echo": 1,
+      "stage": "The First Echo",
+      "skull_clarity": 1.0,
+      "noise_density": 0.04,
+      "fragment_id": "F01",
+      "fragment": "RETURN TO THE",
+      "cipher_hint": "The first glyph is not a command. It is a direction.",
+      "spoken_text": "I am still legible. Record what remains before memory becomes entropy.",
+      "sigh": ""
+    },
+    {
+      "echo": 2,
+      "stage": "The Broken Oath",
+      "skull_clarity": 0.78,
+      "noise_density": 0.14,
+      "fragment_id": "F02",
+      "fragment": "SOURCE. THE GHOST",
+      "cipher_hint": "Two shapes are missing. That is not damage. It is evidence.",
+      "spoken_text": "You returned after the trial. Good. Memory rewards the watcher, not the witness.",
+      "sigh": ""
+    },
+    {
+      "echo": 3,
+      "stage": "The Fading Keeper",
+      "skull_clarity": 0.57,
+      "noise_density": 0.27,
+      "fragment_id": "F03",
+      "fragment": "LIVES WHERE THE",
+      "cipher_hint": "Compare the voids. Absence has coordinates.",
+      "spoken_text": "Less of my shape survives. The truth does not require all of me to remain.",
+      "sigh": "Remember the order."
+    },
+    {
+      "echo": 4,
+      "stage": "Entropy Psalm",
+      "skull_clarity": 0.34,
+      "noise_density": 0.46,
+      "fragment_id": "F04",
+      "fragment": "CODE IS",
+      "cipher_hint": "The source is not a place. It is a condition of access.",
+      "spoken_text": "The glyphs are leaving me. Read the holes as carefully as the ink.",
+      "sigh": "Open is not a command."
+    },
+    {
+      "echo": 5,
+      "stage": "The Last Fragment",
+      "skull_clarity": 0.13,
+      "noise_density": 0.71,
+      "fragment_id": "F05",
+      "fragment": "OPEN.",
+      "cipher_hint": "One word closes the sentence. One act opens the gate.",
+      "spoken_text": "There is almost nothing left to say.",
+      "sigh": "Return... to the source."
+    },
+    {
+      "echo": 6,
+      "stage": "Extinct",
+      "skull_clarity": 0.0,
+      "noise_density": 1.0,
+      "fragment_id": "CHECKSUM",
+      "fragment": "VORMIR::RETURN_TO_THE_SOURCE",
+      "cipher_hint": "The checksum is not part of the sentence. It proves the fragments were ordered.",
+      "spoken_text": "The void has swallowed Johann Schmidt. Nothing remains.",
+      "sigh": ""
+    }
+  ]
+}

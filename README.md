@@ -81,6 +81,16 @@ No intercepted command is sent to the operating system.
 
 ---
 
+## Selected Local Models
+
+| Mode | Selected model | Recommended context | Notes |
+|---|---|---:|---|
+| GPU primary | `qwen2.5:7b-instruct-q4_K_M` | 8192 | Fits the RTX 5060 Laptop 8 GB profile and preserves Chinese character voice |
+| CPU fallback | `qwen2.5:3b-instruct-q4_K_M` | 4096 | Stable on a 14 GiB system with 12 inference threads |
+| Offline | Fixed story assets | 0 | Used when memory, GPU, or Ollama is unavailable |
+
+Hardware selection notes and runtime thresholds are documented in [docs/model-selection.md](./docs/model-selection.md). Machine-readable profiles live in [config/models.toml](./config/models.toml).
+
 ## Open AI Architecture
 
 | Component | Planned implementation |
@@ -118,6 +128,30 @@ The sacrifice mechanic is symbolic: waiting, naming a variable, abandoning an un
 
 ---
 
+## Prepared Story Content
+
+The text and puzzle preparation for the three persistence chapters is complete:
+
+- **Chapter 15 — Death Echoes:** six decay stages, fixed corruption density, ordered fragments, final truth, checksum, and user-facing copy.
+- **Chapter 16 — Polyglot Relic:** a harmless Shell/Python polyglot, a validated Brainfuck payload, a validated Whitespace payload, hashes, and reconstruction instructions.
+- **Chapter 17 — Resurrection Letter:** 72 multilingual/artistic incantations, trigger copy, failure copy, footer safety text, and a static CRT-style HTML template.
+
+Verification can be run with:
+
+```bash
+python3 tools/verify_relics.py
+```
+
+Expected result:
+
+```text
+Death Echoes: OK
+Brainfuck:    OK
+Whitespace:   OK
+Polyglot:     OK
+Incantations: OK (72)
+```
+
 ## Repository Status
 
 Current release: **design and implementation blueprint v1.0**
@@ -132,6 +166,10 @@ Completed:
 - Safe sacrifice and puzzle architecture.
 - Cross-platform implementation roadmap.
 - Test and acceptance criteria.
+- GPU/CPU model selection for the current development machine.
+- Complete Chapter 15, 16, and 17 text and puzzle assets.
+- Validated Brainfuck, Whitespace, and harmless Polyglot relics.
+- Static resurrection-letter template with 72 incantations.
 
 Next milestone:
 
@@ -151,7 +189,27 @@ Next milestone:
 ├── README.md
 ├── SUBMISSION.md
 ├── LICENSE
-└── Vormir_Sentinel_完整方案.md
+├── Vormir_Sentinel_完整方案.md
+├── config/
+│   └── models.toml
+├── content/
+│   ├── README.md
+│   ├── death_echoes.json
+│   ├── death_echoes.zh-CN.md
+│   ├── polyglot_relic.txt
+│   ├── polyglot_relic.bf
+│   ├── whitespace_relic.ws
+│   ├── polyglot_relic.zh-CN.md
+│   ├── resurrection_incantations.json
+│   └── resurrection_letter.zh-CN.md
+├── docs/
+│   └── model-selection.md
+├── templates/
+│   ├── resurrection.template.html
+│   └── resurrection.html
+└── tools/
+    ├── generate_content.py
+    └── verify_relics.py
 ```
 
 ---
