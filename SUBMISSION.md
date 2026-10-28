@@ -2,13 +2,13 @@
 
 ## What I Built
 
-I built **Vormir Sentinel（沃米尔守魂者终端）**, a complete product blueprint for a local AI terminal experience in which a fictional Stonekeeper occupies the machine and turns an ordinary command line into a four-act psychological drama.
+I built **Vormir Sentinel（沃米尔守魂者终端）**, a complete local AI terminal experience in which a fictional Stonekeeper occupies the machine and turns an ordinary command line into a four-act psychological drama.
 
 I interpreted “Ghost in the Machine” as a ghost that changes the machine's perceived identity without ever compromising the real system. A familiar installation sequence drifts into impossible paths and architecture warnings. The terminal mutates into `root@vormir:/#`, Johann Schmidt takes over the dialogue, and ordinary commands such as `whoami`, `uname`, and `ls` become fragments of a darker world.
 
 The project also explores persistence as haunting. After the main story is cleared, later launches enter **Death Echoes**: the ASCII skull decays, cipher fragments disappear, and the character eventually dissolves into noise. The player has only a few returning visits to record enough pieces of the final puzzle.
 
-The current repository contains the full narrative, interaction, prompt-engineering, state-machine, puzzle, accessibility, safety, and implementation specification. The Python/Ollama implementation is the next milestone.
+The repository now ships an executable Python/Ollama implementation with the full narrative, interaction, prompt engineering, state machine, puzzle system, accessibility controls, safety boundary, tests, and release checklist.
 
 ## Demo
 
@@ -17,7 +17,7 @@ The current demo is the complete interactive-design walkthrough in the repositor
 - [Project overview](https://github.com/888xiyan/vormir-sentinel)
 - [完整方案（中文）](https://github.com/888xiyan/vormir-sentinel/blob/main/Vormir_Sentinel_%E5%AE%8C%E6%95%B4%E6%96%B9%E6%A1%88.md)
 
-A deployed terminal build and video walkthrough will be added after the first executable milestone.
+The executable release candidate can be installed from the built wheel; a video walkthrough remains optional for the final release.
 
 ## Code
 
@@ -25,7 +25,7 @@ A deployed terminal build and video walkthrough will be added after the first ex
 
 Direct repository link: [github.com/888xiyan/vormir-sentinel](https://github.com/888xiyan/vormir-sentinel)
 
-The repository currently ships the open implementation blueprint, prompt specification, state model, command map, safety boundary, test plan, and release roadmap.
+The repository ships the open implementation, inspectable prompt specification, state model, command map, safety boundary, tests, CI, packaged narrative assets, and release roadmap.
 
 ## How I Built It
 

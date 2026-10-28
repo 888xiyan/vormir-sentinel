@@ -8,7 +8,7 @@ low_stimulation = false
 skip_installation_on_return = true
 
 [llm]
-# M2 uses this endpoint only when it resolves to loopback and inference is enabled.
+# The character engine uses this endpoint only when it resolves to loopback and inference is enabled.
 provider = "ollama"
 base_url = "http://127.0.0.1:11434"
 model = "qwen2.5:7b-instruct-q4_K_M"

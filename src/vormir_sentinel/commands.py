@@ -151,7 +151,7 @@ class CommandRouter:
             )
         if lowered == "tribute":
             return CommandOutcome(
-                "The tribute altar is not yet awake. It will accept symbolic acts only."
+                "The tribute altar accepts symbolic acts only; no real data is requested."
             )
         if lowered == "secret":
             return self._fictional_secret(args)

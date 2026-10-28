@@ -91,9 +91,9 @@ No intercepted command is sent to the operating system.
 
 Hardware selection notes and runtime thresholds are documented in [docs/model-selection.md](./docs/model-selection.md). Machine-readable profiles live in [config/models.toml](./config/models.toml).
 
-## Quick Start (M1 CLI Core)
+## Quick Start (Release Candidate)
 
-The first executable milestones are available now. The fictional Vormir shell can route safe commands and, when enabled, stream dialogue from a **loopback-only** Ollama service. Remote networking is always rejected.
+The release candidate is executable end to end. The fictional Vormir shell routes safe commands, streams dialogue from a **loopback-only** Ollama service when enabled, persists story state, and generates harmless puzzle artifacts. Remote networking is always rejected.
 
 ```bash
 python3 -m venv .venv
@@ -203,6 +203,8 @@ Incantations: OK (72)
 ## Repository Status
 
 Current release: **CLI + character + story + puzzle release candidate 0.5.0 / design baseline v1.6**
+
+Release materials: [CHANGELOG.md](./CHANGELOG.md) · [Release Notes](./RELEASE_NOTES.md) · [release checklist](./docs/release-checklist.md)
 
 Completed:
 
