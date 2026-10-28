@@ -8,7 +8,7 @@ Vormir Sentinel reimagines a command-line session as a four-act psychological dr
 
 This repository currently contains the complete product blueprint, safety model, prompt design, interaction architecture, and implementation roadmap for the first release.
 
-[完整方案（中文）](./Vormir_Sentinel_完整方案.md) · [Hacktoberfest submission draft](./SUBMISSION.md)
+[完整方案（中文）](./Vormir_Sentinel_完整方案.md) · [项目管理文档](./PROJECT_MANAGEMENT.md) · [Hacktoberfest submission draft](./SUBMISSION.md)
 
 ---
 
@@ -166,6 +166,7 @@ Completed:
 - Safe sacrifice and puzzle architecture.
 - Cross-platform implementation roadmap.
 - Test and acceptance criteria.
+- Project charter, WBS, milestones, backlog, quality gates, governance, risks, and Definition of Done.
 - GPU/CPU model selection for the current development machine.
 - Complete Chapter 15, 16, and 17 text and puzzle assets.
 - Validated Brainfuck, Whitespace, and harmless Polyglot relics.
@@ -187,6 +188,7 @@ Next milestone:
 ```text
 .
 ├── README.md
+├── PROJECT_MANAGEMENT.md
 ├── SUBMISSION.md
 ├── LICENSE
 ├── Vormir_Sentinel_完整方案.md
