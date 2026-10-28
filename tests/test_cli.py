@@ -90,6 +90,19 @@ class CliTests(unittest.TestCase):
 
         self.assertNotIn("\x1b[", output.getvalue())
 
+    def test_export_state_prints_versioned_json(self) -> None:
+        output = StringIO()
+
+        result = main(
+            ["--export-state", "--plain"],
+            stdout=output,
+            state_store=self.state_store,
+        )
+
+        self.assertEqual(result, 0)
+        self.assertIn('"schema_version": 1', output.getvalue())
+        self.assertIn('"cleared": false', output.getvalue())
+
     def test_plain_alias_disables_ansi(self) -> None:
         output = StringIO()
         scripted = ScriptedInput(["help", "exit"])

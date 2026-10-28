@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from collections.abc import Sequence
 from pathlib import Path
@@ -82,6 +83,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--status",
         action="store_true",
         help="show local story progress and exit",
+    )
+    parser.add_argument(
+        "--export-state",
+        action="store_true",
+        help="print versioned local story state as JSON and exit",
     )
     parser.add_argument(
         "--reconstruct",
@@ -210,6 +216,9 @@ def main(
         except EchoError as exc:
             error.write(f"vormir-sentinel: {exc}\n")
             return 2
+        return 0
+    if args.export_state:
+        display.print(json.dumps(progress.to_dict(), ensure_ascii=False, indent=2))
         return 0
     if args.status:
         display.print(

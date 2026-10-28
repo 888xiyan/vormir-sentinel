@@ -14,7 +14,7 @@ All notable changes to Vormir Sentinel are documented here.
 - Four-act story director, boot metamorphosis, fictional takeover, and Ctrl+C responses.
 - Atomic local story state, symbolic tributes, Death Echoes, and fragment reconstruction.
 - Harmless Polyglot, Brainfuck, Whitespace, deed, and resurrection artifacts.
-- `--status`, `--reconstruct`, `--clean`, `--forget`, `--safe`, and `--offline` controls.
+- `--status`, `--export-state`, `--reconstruct`, `--clean`, `--forget`, `--safe`, and `--offline` controls.
 - Cross-platform CI matrix for Linux, Windows, and macOS.
 
 ### Safety

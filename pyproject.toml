@@ -25,6 +25,11 @@ dev = [
     "ruff>=0.7",
 ]
 
+[project.urls]
+Homepage = "https://github.com/888xiyan/vormir-sentinel"
+Repository = "https://github.com/888xiyan/vormir-sentinel"
+Issues = "https://github.com/888xiyan/vormir-sentinel/issues"
+
 [project.scripts]
 vormir-sentinel = "vormir_sentinel.cli:entrypoint"
 

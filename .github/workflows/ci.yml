@@ -45,3 +45,7 @@ jobs:
       - name: Build distributions
         if: matrix.os == 'ubuntu-latest' && matrix.python == '3.12'
         run: python -m build
+
+      - name: Check release metadata
+        if: matrix.os == 'ubuntu-latest' && matrix.python == '3.12'
+        run: python tools/release_check.py --wheel dist/vormir_sentinel-0.5.0-py3-none-any.whl

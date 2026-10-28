@@ -8,6 +8,7 @@
 - [ ] `pytest -q`
 - [ ] `python tools/verify_relics.py`
 - [ ] `python -m build`
+- [ ] `python tools/release_check.py --wheel dist/vormir_sentinel-<version>-py3-none-any.whl`
 - [ ] Wheel contains `vormir_sentinel/assets/` and `assets/templates/`.
 
 ## Manual acceptance

@@ -8,7 +8,7 @@ Vormir Sentinel reimagines a command-line session as a four-act psychological dr
 
 This repository contains the complete product blueprint and a release-candidate-quality local terminal: configuration, Rich and plain-text presentation, Readline input, a fixed virtual filesystem, whitelisted commands, loopback Ollama streaming, GPU/CPU/offline fallback, four-act narrative transitions, symbolic tributes, Death Echoes, harmless relics, resurrection HTML, packaging assets, CI, and safe exits.
 
-[完整方案（中文）](./Vormir_Sentinel_完整方案.md) · [项目管理文档](./PROJECT_MANAGEMENT.md) · [Hacktoberfest submission draft](./SUBMISSION.md)
+[完整方案（中文）](./Vormir_Sentinel_完整方案.md) · [项目管理文档](./PROJECT_MANAGEMENT.md) · [发布说明](./RELEASE_NOTES.md) · [Hacktoberfest submission draft](./SUBMISSION.md)
 
 ---
 
@@ -117,6 +117,7 @@ vormir-sentinel --mode cpu      # prefer the configured CPU profile
 vormir-sentinel --mode offline  # fixed story responses; no Ollama request
 vormir-sentinel --safe          # offline, low-stimulation, directly controlled
 vormir-sentinel --status        # show local story progress and exit
+vormir-sentinel --export-state  # print versioned state JSON without writing files
 vormir-sentinel --reconstruct   # inspect recorded Echo fragments safely
 vormir-sentinel --clean         # remove generated artifacts and state
 vormir-sentinel --forget        # remove state only
@@ -201,7 +202,7 @@ Incantations: OK (72)
 
 ## Repository Status
 
-Current release: **CLI + character + story + puzzle preview 0.5.0 / design baseline v1.5**
+Current release: **CLI + character + story + puzzle release candidate 0.5.0 / design baseline v1.6**
 
 Completed:
 
@@ -238,12 +239,13 @@ Completed:
 - Safe `--clean`, `--forget`, `--status`, and `--reconstruct` one-shot commands.
 - Plain-text mode for reduced ANSI exposure and pipe-safe output.
 - Packaged narrative assets so wheels do not depend on the source checkout.
-- Linux, Windows, and macOS CI with Ruff, mypy, pytest, asset verification, and wheel build.
+- Linux, Windows, and macOS CI with Ruff, mypy, pytest, asset verification, wheel build, and release metadata checks.
+- `--export-state` JSON inspection without writing files.
 - Unit and integration tests for CLI safety, model policy, story, state, puzzles, streaming, and exits.
 
 Next milestone:
 
-- Three-platform manual acceptance, release notes, binary hashes, and GitHub Release.
+- Three-platform manual acceptance, binary hashes, and GitHub Release.
 
 ---
 
@@ -253,6 +255,7 @@ Next milestone:
 .
 ├── README.md
 ├── CHANGELOG.md
+├── RELEASE_NOTES.md
 ├── pyproject.toml
 ├── PROJECT_MANAGEMENT.md
 ├── SUBMISSION.md
