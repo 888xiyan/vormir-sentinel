@@ -218,6 +218,7 @@ The test suite covers startup discovery, model selection, Agent-page fallback, f
 - [项目管理文档](./PROJECT_MANAGEMENT.md)
 - [模型选型](./docs/model-selection.md)
 - [发布检查清单](./docs/release-checklist.md)
+- [Windows 人工验收工单](./docs/windows-manual-acceptance.md)
 - [变更记录](./CHANGELOG.md)
 
 ## License

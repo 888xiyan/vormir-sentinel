@@ -26,7 +26,7 @@
 
 - [x] Linux first launch, second launch, `--safe`, and `--offline` — 2026-10-29.
 - [ ] macOS first launch, second launch, `--safe`, and `--offline`.
-- [ ] Windows first launch, second launch, `--safe`, and `--offline`.
+- [ ] Windows first launch, second launch, `--safe`, and `--offline` — 使用 [Windows 人工验收工单](./windows-manual-acceptance.md)。
 - [ ] GPU model when available; CPU model when available; offline fallback otherwise.
 - [ ] `Ctrl+C` twice always exits.
 - [ ] `exit --now` and closing the window always exit.
