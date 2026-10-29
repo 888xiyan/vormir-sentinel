@@ -4,12 +4,24 @@ from __future__ import annotations
 
 import json
 from collections.abc import Iterator, Mapping, Sequence
+from dataclasses import dataclass
 from typing import Any
 from urllib.error import HTTPError, URLError
 from urllib.parse import urlsplit
 from urllib.request import HTTPRedirectHandler, ProxyHandler, Request, build_opener
 
 LOOPBACK_HOSTS = frozenset({"127.0.0.1", "localhost", "::1"})
+
+
+@dataclass(frozen=True)
+class InstalledModel:
+    """Read-only metadata returned by the local Ollama service."""
+
+    name: str
+    size_bytes: int | None = None
+    modified_at: str | None = None
+    family: str | None = None
+    quantization: str | None = None
 
 
 class OllamaError(RuntimeError):
@@ -70,21 +82,43 @@ class OllamaClient:
             return False
         return True
 
-    def list_models(self) -> set[str]:
+    def list_model_metadata(self) -> tuple[InstalledModel, ...]:
+        """Fetch installed model metadata without starting or downloading anything."""
         payload = self._request("GET", "/api/tags", timeout=self.health_timeout)
         models = payload.get("models")
         if not isinstance(models, list):
             raise OllamaProtocolError("Ollama /api/tags did not return a model list.")
 
-        installed: set[str] = set()
+        installed: list[InstalledModel] = []
+        seen: set[str] = set()
         for item in models:
             if not isinstance(item, dict):
                 continue
-            for key in ("model", "name"):
-                value = item.get(key)
-                if isinstance(value, str) and value:
-                    installed.add(value)
-        return installed
+            name = item.get("model") or item.get("name")
+            if not isinstance(name, str) or not name or name in seen:
+                continue
+            seen.add(name)
+            size = item.get("size")
+            details = item.get("details")
+            details_dict = details if isinstance(details, dict) else {}
+            family = details_dict.get("family")
+            quantization = details_dict.get("quantization_level")
+            modified_at = item.get("modified_at")
+            installed.append(
+                InstalledModel(
+                    name=name,
+                    size_bytes=(
+                        size if isinstance(size, int) and not isinstance(size, bool) else None
+                    ),
+                    modified_at=modified_at if isinstance(modified_at, str) else None,
+                    family=family if isinstance(family, str) else None,
+                    quantization=quantization if isinstance(quantization, str) else None,
+                )
+            )
+        return tuple(sorted(installed, key=lambda model: model.name))
+
+    def list_models(self) -> set[str]:
+        return {model.name for model in self.list_model_metadata()}
 
     def chat_stream(
         self,

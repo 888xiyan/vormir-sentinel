@@ -11,6 +11,17 @@
 - [ ] `python tools/release_check.py --wheel dist/vormir_sentinel-<version>-py3-none-any.whl`
 - [ ] Wheel contains `vormir_sentinel/assets/` and `assets/templates/`.
 
+## Phase Two acceptance
+
+- [x] README shows Ollama prerequisite, model download commands, startup modes, and safe exits.
+- [x] `--list-models` reads only loopback Ollama metadata.
+- [x] `--pick-model` supports GPU, CPU, custom, download-command, and offline choices.
+- [x] Installation progress reaches 99% and shows the fixed fictional metamorphosis text.
+- [x] Full Agent page renders on capable TTY/color terminals.
+- [x] Plain, safe, offline, non-TTY, and narrow-terminal modes use fallback presentation.
+- [x] `/download` prints without executing or downloading.
+- [x] POSIX virtual commands and all safe exits remain available.
+
 ## Manual acceptance
 
 - [x] Linux first launch, second launch, `--safe`, and `--offline` — 2026-10-29.

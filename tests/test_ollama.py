@@ -28,7 +28,13 @@ class _FakeOllamaHandler(BaseHTTPRequestHandler):
         body = json.dumps(
             {
                 "models": [
-                    {"name": "qwen2.5:7b-instruct-q4_K_M", "model": "qwen2.5:7b-instruct-q4_K_M"},
+                    {
+                        "name": "qwen2.5:7b-instruct-q4_K_M",
+                        "model": "qwen2.5:7b-instruct-q4_K_M",
+                        "size": 5_000_000_000,
+                        "modified_at": "2026-10-29T00:00:00Z",
+                        "details": {"family": "qwen2", "quantization_level": "Q4_K_M"},
+                    },
                     {"name": "qwen2.5:3b-instruct-q4_K_M"},
                 ]
             }
@@ -88,6 +94,15 @@ class OllamaClientTests(unittest.TestCase):
 
         self.assertIn("qwen2.5:7b-instruct-q4_K_M", models)
         self.assertIn("qwen2.5:3b-instruct-q4_K_M", models)
+
+    def test_model_metadata_includes_read_only_details(self) -> None:
+        models = self.client.list_model_metadata()
+        gpu = next(model for model in models if model.name == "qwen2.5:7b-instruct-q4_K_M")
+
+        self.assertEqual(gpu.size_bytes, 5_000_000_000)
+        self.assertEqual(gpu.family, "qwen2")
+        self.assertEqual(gpu.quantization, "Q4_K_M")
+        self.assertEqual(gpu.modified_at, "2026-10-29T00:00:00Z")
 
     def test_chat_stream_yields_ndjson_fragments(self) -> None:
         messages = [{"role": "user", "content": "Who are you?"}]

@@ -78,6 +78,20 @@ class DialogueEngineTests(unittest.TestCase):
         self.assertNotIn("深度求索", answer)
         self.assertIn("约翰·施密特", answer)
 
+    def test_select_model_switches_in_memory(self) -> None:
+        engine = StreamingDialogueEngine(
+            FakeFailingThenWorkingClient(),
+            (
+                _profile("gpu", "gpu-model"),
+                _profile("cpu", "cpu-model"),
+                _profile("offline", "none", offline=True),
+            ),
+        )
+
+        self.assertTrue(engine.select_model("cpu-model"))
+        self.assertEqual(engine.active_profile.model, "cpu-model")
+        self.assertFalse(engine.select_model("missing-model"))
+
     def test_partial_stream_is_not_replayed(self) -> None:
         client = FakeFailingThenWorkingClient(partial_failure=True)
         engine = StreamingDialogueEngine(

@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "kind": "agent_page",
+  "title": "RedSkoll Agent Terminal",
+  "ascii": [
+    "      .-^^^^-.",
+    "    .`  ____  `.",
+    "   /   / ## \\   \\",
+    "  |   | #### |   |",
+    "   \\   \\____/   /",
+    "    `.  ____  .`",
+    "      `-______-`"
+  ],
+  "intro": "The host is ready. Ask, and pay in attention.",
+  "safety": "[fictional takeover only; no host command was executed]"
+}

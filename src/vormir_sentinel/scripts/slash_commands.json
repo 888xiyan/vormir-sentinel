@@ -1,0 +1,91 @@
+{
+  "schema_version": 1,
+  "commands": {
+    "/help": {
+      "kind": "fixed",
+      "description": "Show Agent commands and safe exits.",
+      "text": "RedSkoll Agent commands:\n  /help                 show this list\n  /model                current model and Ollama status\n  /model list           list installed local models\n  /model select NAME    switch to an installed model\n  /download MODEL       print an ollama pull command only\n  /offline              switch to fixed offline dialogue\n  /status               story, model, and safety status\n  /story                current story stage\n  /context              conversation context summary\n  /clear                clear Agent conversation only\n  /relic                show generated relic status\n  /reconstruct          inspect Echo fragments safely\n  /tribute              show symbolic tribute types\n  /safe                 enable low-stimulation mode\n  /exit                 use the real safe exit flow\n\nPOSIX virtual commands remain available. Safe exits: /exit, exit --now, Ctrl+C twice, or close the window.",
+      "state_updates": []
+    },
+    "/status": {
+      "kind": "fixed",
+      "description": "Show model, story, and safety status.",
+      "text": "REDSKOLL STATUS\nmodel: {model}\nmode: {mode}\ncontext: {context}\nollama: {ollama_status}\nstory: {story_act}\nsafe_exit: exit --now",
+      "state_updates": []
+    },
+    "/story": {
+      "kind": "fixed",
+      "description": "Show current story stage.",
+      "text": "Story stage: {story_act}\nThe next story transition remains local and fictional.",
+      "state_updates": []
+    },
+    "/context": {
+      "kind": "fixed",
+      "description": "Show conversation context usage.",
+      "text": "Conversation turns: {conversation_count}\nContext window: {context}\nSummary policy: last 12 turns; no remote upload.",
+      "state_updates": []
+    },
+    "/tribute": {
+      "kind": "fixed",
+      "description": "Show symbolic tribute types.",
+      "text": "Symbolic tributes: time, fictional name, invented secret, release, virtual file.\nNo real credentials or files are requested.",
+      "state_updates": []
+    },
+    "/relic": {
+      "kind": "fixed",
+      "description": "Show generated relic status.",
+      "text": "{relic_text}",
+      "state_updates": []
+    },
+    "/reconstruct": {
+      "kind": "fixed",
+      "description": "Inspect Death Echo fragments.",
+      "text": "{reconstruct_text}",
+      "state_updates": []
+    },
+    "/offline": {
+      "kind": "state",
+      "description": "Switch to offline dialogue.",
+      "text": "Offline story mode enabled. No Ollama request will be made.",
+      "state_updates": [
+        "offline"
+      ]
+    },
+    "/safe": {
+      "kind": "state",
+      "description": "Enable low-stimulation mode.",
+      "text": "Low-stimulation mode enabled. Animation and high-intensity effects are disabled.",
+      "state_updates": [
+        "safe"
+      ]
+    },
+    "/clear": {
+      "kind": "state",
+      "description": "Clear Agent conversation only.",
+      "text": "Agent conversation cleared. Story state and files were not changed.",
+      "state_updates": [
+        "clear_conversation"
+      ]
+    },
+    "/exit": {
+      "kind": "state",
+      "description": "Exit through the real safe flow.",
+      "text": "Safe exit engaged. The process is ending.",
+      "state_updates": [
+        "exit"
+      ]
+    },
+    "/model": {
+      "kind": "dynamic",
+      "description": "Show, list, or select local models.",
+      "text": "Usage: /model, /model list, or /model select NAME",
+      "state_updates": []
+    },
+    "/download": {
+      "kind": "dynamic",
+      "description": "Print an ollama pull command without executing it.",
+      "text": "Usage: /download MODEL",
+      "state_updates": []
+    }
+  }
+}

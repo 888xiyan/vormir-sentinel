@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "kind": "startup",
+  "lines": [
+    "RedSkoll startup discovery is read-only.",
+    "No model download or host command is executed."
+  ]
+}

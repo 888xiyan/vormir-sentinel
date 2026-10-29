@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import time
 from os import environ
 from typing import Any, TextIO
 
@@ -30,6 +31,15 @@ class Display:
         )
         self.low_stimulation = low_stimulation
         self._console: Any = self._make_rich_console()
+
+    @property
+    def width(self) -> int:
+        if self._console is not None:
+            try:
+                return int(self._console.width)
+            except (AttributeError, TypeError, ValueError):
+                pass
+        return 80
 
     def _make_rich_console(self) -> Any:
         try:
@@ -80,6 +90,57 @@ class Display:
             return
         self.stream.write(text)
         self.stream.flush()
+
+    def panel(self, title: str, text: str, *, style: str | None = None) -> None:
+        """Render a Rich panel when possible, otherwise an ASCII bordered block."""
+        if self._console is not None and self.color_enabled:
+            try:
+                from rich.panel import Panel
+
+                self._console.print(
+                    Panel(text, title=title, style=style or "none", padding=(0, 1)),
+                    highlight=False,
+                    markup=False,
+                )
+                return
+            except (ImportError, TypeError, ValueError):
+                pass
+        lines = text.splitlines() or [""]
+        width = max(len(title) + 4, max(len(line) for line in lines) + 2, 20)
+        self.print(f"+-{title}-{'-' * max(0, width - len(title) - 4)}+")
+        for line in lines:
+            self.print(f"| {line.ljust(width - 2)} |")
+        self.print(f"+{'-' * width}+")
+
+    def run_progress(self, stages: list[tuple[int, str]]) -> None:
+        """Animate fixed fictional installation stages on capable terminals."""
+        if not stages:
+            return
+        if not (self.is_tty and self.color_enabled and not self.low_stimulation and self._console):
+            for percent, label in stages:
+                self.print(f"{percent:>3}%  {label}")
+            return
+
+        try:
+            from rich.progress import BarColumn, Progress, TextColumn
+        except ImportError:
+            for percent, label in stages:
+                self.print(f"{percent:>3}%  {label}")
+            return
+
+        progress = Progress(
+            TextColumn("[bold red]{task.description}"),
+            BarColumn(),
+            TextColumn("{task.percentage:>3}%"),
+            console=self._console,
+            transient=False,
+        )
+        with progress:
+            task = progress.add_task(stages[0][1], total=100)
+            for percent, label in stages:
+                progress.update(task, completed=percent, description=label)
+                time.sleep(0.12)
+            time.sleep(0.8)
 
     def clear(self) -> None:
         """Clear only this display. No host terminal command is executed."""

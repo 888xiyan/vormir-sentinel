@@ -24,6 +24,15 @@ from vormir_sentinel.model_policy import (
 from vormir_sentinel.ollama import OllamaClient, OllamaError
 from vormir_sentinel.relics import RelicError, RelicGenerator
 from vormir_sentinel.repl import InputFunction, Repl
+from vormir_sentinel.slash import SlashCommandRegistry
+from vormir_sentinel.startup import (
+    StartupDiscovery,
+    StartupSelection,
+    default_selection,
+    discover_startup,
+    format_model_list,
+    interactive_selection,
+)
 from vormir_sentinel.state import StateStore
 from vormir_sentinel.story import StoryDirector
 from vormir_sentinel.tributes import TributeManager
@@ -80,6 +89,16 @@ def build_parser() -> argparse.ArgumentParser:
         help="load an alternate TOML configuration file",
     )
     parser.add_argument(
+        "--pick-model",
+        action="store_true",
+        help="show the interactive local model selector before starting",
+    )
+    parser.add_argument(
+        "--list-models",
+        action="store_true",
+        help="list installed loopback Ollama models and exit",
+    )
+    parser.add_argument(
         "--status",
         action="store_true",
         help="show local story progress and exit",
@@ -125,12 +144,29 @@ def _requested_mode(args: argparse.Namespace, parser: argparse.ArgumentParser) -
 def create_dialogue_engine(
     config: Config,
     mode: RunMode,
+    *,
+    selection: StartupSelection | None = None,
 ) -> DialogueEngine:
     """Create a safe local character engine, degrading to offline behavior."""
-    if mode == "offline":
-        return OfflineDialogueEngine(reason="offline mode requested")
+    if mode == "offline" or (selection is not None and selection.active_profile.is_offline):
+        reason = selection.message if selection is not None else "offline mode requested"
+        return OfflineDialogueEngine(reason=reason)
     if not config.safety.allow_local_inference:
         return OfflineDialogueEngine(reason="local inference disabled by configuration")
+
+    if selection is not None:
+        try:
+            client = OllamaClient(config.llm.base_url)
+        except (OllamaError, OSError, ValueError):
+            return OfflineDialogueEngine(reason="loopback Ollama service unavailable")
+        profiles = tuple(profile for profile in selection.profiles if not profile.is_offline)
+        if not profiles:
+            return OfflineDialogueEngine(reason="selected dialogue model is not installed")
+        return StreamingDialogueEngine(
+            client,
+            profiles,
+            fallback_reason=selection.message or None,
+        )
 
     try:
         catalog = ModelCatalog.load()
@@ -165,6 +201,10 @@ def main(
 ) -> int:
     parser = build_parser()
     args = parser.parse_args(argv)
+    if args.pick_model and args.offline:
+        parser.error("--pick-model cannot be combined with --offline")
+    if args.list_models and args.offline:
+        parser.error("--list-models cannot be combined with --offline")
     output = stdout or sys.stdout
     error = stderr or sys.stderr
     input_stream = stdin or sys.stdin
@@ -232,7 +272,40 @@ def main(
         )
         return 0
 
-    dialogue = create_dialogue_engine(config, mode)
+    try:
+        catalog = ModelCatalog.load()
+    except ModelPolicyError as exc:
+        error.write(f"vormir-sentinel: {exc}\n")
+        return 2
+
+    if args.offline:
+        discovery = StartupDiscovery(status="OFFLINE", endpoint=config.llm.base_url)
+        selection = default_selection(config, catalog, discovery, "offline")
+    else:
+        discovery = discover_startup(config, catalog)
+        if args.list_models:
+            display.print(format_model_list(discovery))
+            return 0
+        interactive = bool(args.pick_model)
+        if interactive:
+            selection = interactive_selection(
+                config,
+                catalog,
+                discovery,
+                read=input_function or input,
+                write=display.print,
+            )
+        else:
+            selection = default_selection(config, catalog, discovery, mode)
+            if selection.message:
+                display.print(f"Startup: {discovery.status} — {selection.message}")
+                display.print()
+
+    if args.list_models:
+        display.print(format_model_list(discovery))
+        return 0
+
+    dialogue = create_dialogue_engine(config, selection.mode, selection=selection)
     router = CommandRouter(config)
     director = StoryDirector(config)
     repl = Repl(
@@ -248,6 +321,9 @@ def main(
         tributes=TributeManager(),
         echoes=DeathEchoManager(),
         relics=relics,
+        startup=discovery,
+        selection=selection,
+        slash_registry=SlashCommandRegistry.load(),
     )
     return repl.run()
 

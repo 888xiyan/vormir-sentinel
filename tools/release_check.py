@@ -36,6 +36,10 @@ def check_wheel(path: Path, version: str) -> None:
         "vormir_sentinel/assets/polyglot_relic.bf",
         "vormir_sentinel/assets/whitespace_relic.ws",
         "vormir_sentinel/assets/templates/resurrection.template.html",
+        "vormir_sentinel/scripts/slash_commands.json",
+        "vormir_sentinel/scripts/redskoll_agent.json",
+        "vormir_sentinel/scripts/startup.json",
+        "vormir_sentinel/scripts/takeover.json",
     }
     missing = expected - names
     if missing:

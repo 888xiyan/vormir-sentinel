@@ -132,6 +132,15 @@ class StreamingDialogueEngine:
     def active_profile(self) -> ModelProfile:
         return self.profiles[self.active_index]
 
+    def select_model(self, model: str) -> bool:
+        """Switch in memory to another profile already supplied for this session."""
+        for index, profile in enumerate(self.profiles):
+            if profile.model == model:
+                self.active_index = index
+                self.fallback_reason = None
+                return True
+        return False
+
     @property
     def status_line(self) -> str:
         profile = self.active_profile

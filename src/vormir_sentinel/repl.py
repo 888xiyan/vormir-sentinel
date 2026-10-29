@@ -1,19 +1,23 @@
-"""Safe interactive loop for the fictional terminal."""
+"""Safe interactive loop for the fictional terminal and RedSkoll Agent page."""
 
 from __future__ import annotations
 
 import contextlib
 import shlex
 from collections.abc import Callable
+from dataclasses import replace
 from typing import TextIO
 
+from vormir_sentinel.agent import AgentPage
 from vormir_sentinel.commands import WHITELIST, CommandOutcome, CommandRouter, SessionState
 from vormir_sentinel.console import Display
 from vormir_sentinel.death_echoes import DeathEchoManager
-from vormir_sentinel.dialogue import DialogueEngine
+from vormir_sentinel.dialogue import DialogueEngine, OfflineDialogueEngine
 from vormir_sentinel.relics import GeneratedRelic, RelicError, RelicGenerator
+from vormir_sentinel.slash import SlashCommandRegistry, SlashContext, SlashOutcome
+from vormir_sentinel.startup import StartupDiscovery, StartupSelection
 from vormir_sentinel.state import ProgressState, StateStore
-from vormir_sentinel.story import StoryAct, StoryDirector
+from vormir_sentinel.story import StoryDirector
 from vormir_sentinel.tributes import TributeManager
 
 InputFunction = Callable[[str], str]
@@ -44,6 +48,9 @@ class Repl:
         tributes: TributeManager | None = None,
         echoes: DeathEchoManager | None = None,
         relics: RelicGenerator | None = None,
+        startup: StartupDiscovery | None = None,
+        selection: StartupSelection | None = None,
+        slash_registry: SlashCommandRegistry | None = None,
     ) -> None:
         self.display = display
         self.router = router
@@ -57,15 +64,39 @@ class Repl:
         self.tributes = tributes
         self.echoes = echoes
         self.relics = relics
+        self.startup = startup
+        self.selection = selection
+        self.slash_registry = slash_registry or SlashCommandRegistry.load()
         self.state = SessionState()
+        self.agent_page = self._make_agent_page()
+
+    def _make_agent_page(self) -> AgentPage | None:
+        if self.selection is None:
+            return None
+        return AgentPage(
+            display=self.display,
+            model=self.selection.model_name,
+            mode=self.selection.mode_label,
+            context=self.selection.context_label,
+            ollama_status=self.selection.status,
+            story_act=self.director.act.name if self.director else "BOOT",
+            safe_mode=self.safe_mode,
+        )
 
     def run(self) -> int:
         self._begin_progress()
         if self.director is not None and not (self.progress and self.progress.cleared):
-            prologue = self.director.begin()
+            callback = self.display.run_progress if self._can_animate_install() else None
+            prologue = self.director.begin(callback)
             if prologue:
                 self.display.print(prologue)
                 self.display.print()
+            if self.progress is not None:
+                self.progress.act = self.director.act.name.lower()
+                if self.state_store is not None:
+                    self.state_store.save(self.progress)
+            if self.agent_page is not None:
+                self.agent_page.story_act = self.director.act.name
         self._print_banner()
         if self.input_function is None and self._can_use_readline():
             self._configure_readline()
@@ -92,10 +123,20 @@ class Repl:
                 continue
 
             self.state.history.append(stripped)
+            if stripped.startswith("/"):
+                slash_outcome = self._route_slash(stripped)
+                if slash_outcome.exit_requested:
+                    break
+                continue
+
             try:
                 outcome = self._route_with_progress(stripped)
                 if outcome.status == "unknown" and self.dialogue is not None:
-                    self._stream_dialogue(stripped)
+                    if self.agent_page is not None:
+                        self.agent_page.begin_turn(stripped)
+                    answer = self._stream_dialogue(stripped)
+                    if self.agent_page is not None:
+                        self.agent_page.finish_turn(stripped, answer)
                 else:
                     self._render(outcome)
                     if stripped.lower() == "settings" and self.dialogue is not None:
@@ -118,7 +159,12 @@ class Repl:
         if self.input_function is not None:
             return self.input_function("")
         if self.stdin is not None:
-            return self.stdin.readline().removesuffix("\n") if not self.stdin.closed else None
+            if self.stdin.closed:
+                return None
+            line = self.stdin.readline()
+            if line == "":
+                return None
+            return line.removesuffix("\n")
         return input()
 
     def _begin_progress(self) -> None:
@@ -128,13 +174,17 @@ class Repl:
             self.progress.act = "cleared"
             if self.director is not None:
                 self.director.state.boot_completed = True
+                from vormir_sentinel.story import StoryAct
+
                 self.director.state.act = StoryAct.CLEARED
         elif self.progress.act in {"", "boot"}:
-            self.progress.act = "vormir_shell"
+            self.progress.act = "model_selection"
         elif self.director is not None:
             self.director.state.boot_completed = True
-            if self.progress.act == "vormir_shell":
-                self.director.state.act = StoryAct.VORMIR_SHELL
+            if self.progress.act in {"vormir_shell", "agent_page"}:
+                from vormir_sentinel.story import StoryAct
+
+                self.director.state.act = StoryAct.AGENT_PAGE
         if self.state_store is not None:
             self.state_store.save(self.progress)
         if self.echoes is not None and self.progress.cleared:
@@ -180,11 +230,125 @@ class Repl:
 
         return self.router.route(stripped, self.state)
 
+    def _route_slash(self, stripped: str) -> SlashOutcome:
+        context = self._slash_context()
+        outcome = self.slash_registry.render(stripped, context)
+        if outcome.text:
+            self.display.print(outcome.text, style="yellow" if outcome.status == "error" else None)
+
+        if outcome.clear_conversation and self.agent_page is not None:
+            self.agent_page.clear_conversation()
+        if outcome.offline_requested:
+            self._switch_to_offline()
+        if outcome.safe_mode_requested:
+            self._enable_safe_mode()
+        if outcome.model_override is not None:
+            self._switch_model(outcome.model_override)
+        return outcome
+
+    def _slash_context(self) -> SlashContext:
+        selection = self.selection
+        model = selection.model_name if selection else "offline"
+        mode = selection.mode_label if selection else "OFFLINE"
+        context = selection.context_label if selection else "0k"
+        status = selection.status if selection else "OFFLINE"
+        story_act = (
+            self.director.act.name
+            if self.director
+            else (self.progress.act.upper() if self.progress else "BOOT")
+        )
+        output_root = str(self.relics.output_root) if self.relics else "not configured"
+        installed: tuple[str, ...] = ()
+        if self.startup is not None:
+            installed = self.startup.dialogue_model_names
+        elif selection is not None:
+            installed = tuple(
+                profile.model for profile in selection.profiles if not profile.is_offline
+            )
+
+        relic_text = (
+            "Relics are available in the approved output directory."
+            if self.progress and self.progress.relic_generated
+            else "No relic has been generated yet."
+        )
+        reconstruct_text = (
+            self.echoes.reconstruct(self.progress)
+            if self.echoes is not None and self.progress is not None
+            else "No Death Echo fragments have been recorded yet."
+        )
+        return SlashContext(
+            model=model,
+            mode=mode,
+            context=context,
+            ollama_status=status,
+            story_act=story_act,
+            output_root=output_root,
+            installed_models=installed,
+            conversation_count=len(self.agent_page.conversation) if self.agent_page else 0,
+            safe_mode=self.safe_mode,
+            relic_text=relic_text,
+            reconstruct_text=reconstruct_text,
+        )
+
+    def _switch_to_offline(self) -> None:
+        self.dialogue = OfflineDialogueEngine(reason="slash /offline")
+        if self.selection is not None:
+            offline_profile = next(
+                (profile for profile in self.selection.profiles if profile.is_offline),
+                self.selection.active_profile,
+            )
+            self.selection = replace(
+                self.selection,
+                mode="offline",
+                active_profile=offline_profile,
+                source="slash-offline",
+                message="Offline mode selected from Agent page.",
+            )
+        if self.agent_page is not None and self.selection is not None:
+            self.agent_page.update_model(
+                self.selection.model_name,
+                self.selection.mode_label,
+                self.selection.context_label,
+            )
+            self.agent_page.ollama_status = "OFFLINE"
+            self.agent_page.mode = "OFFLINE"
+
+    def _enable_safe_mode(self) -> None:
+        self.safe_mode = True
+        self.display.low_stimulation = True
+        if self.agent_page is not None:
+            self.agent_page.safe_mode = True
+
+    def _switch_model(self, model: str) -> None:
+        if self.selection is None:
+            return
+        for profile in self.selection.profiles:
+            if profile.model == model:
+                self.selection = replace(
+                    self.selection,
+                    active_profile=profile,
+                    source="slash-select",
+                    message=f"Selected installed model: {model}",
+                )
+                if self.dialogue is not None:
+                    switch = getattr(self.dialogue, "select_model", None)
+                    if callable(switch):
+                        switch(model)
+                if self.agent_page is not None:
+                    self.agent_page.update_model(
+                        self.selection.model_name,
+                        self.selection.mode_label,
+                        self.selection.context_label,
+                    )
+                return
+
     def _complete_story(self) -> None:
         if self.progress is None:
             return
         self.progress.act = "cleared"
         if self.director is not None:
+            from vormir_sentinel.story import StoryAct
+
             self.director.state.act = StoryAct.CLEARED
         if self.relics is not None:
             try:
@@ -199,11 +363,14 @@ class Repl:
         if self.state_store is not None:
             self.state_store.save(self.progress)
 
-    def _stream_dialogue(self, question: str) -> None:
+    def _stream_dialogue(self, question: str) -> str:
         assert self.dialogue is not None
+        answer_parts: list[str] = []
         for fragment in self.dialogue.stream(question):
+            answer_parts.append(fragment)
             self.display.write_fragment(fragment)
         self.display.print()
+        return "".join(answer_parts)
 
     def _render(self, outcome: CommandOutcome) -> None:
         if outcome.clear_screen:
@@ -231,28 +398,46 @@ class Repl:
         return self.state.interrupt_count >= 2
 
     def _print_banner(self) -> None:
+        if self.agent_page is not None and self.agent_page.full_page:
+            self.agent_page.enter()
+            return
+
         mode = (
             "SAFE MODE — no animation, network, or host commands."
             if self.safe_mode
             else ("FICTIONAL INTERFACE — the real host is not being controlled.")
         )
-        self.display.print("Vormir Sentinel / local character core", style="bold red")
+        self.display.print("RedSkoll Agent Terminal / Vormir Sentinel", style="bold red")
         self.display.print(mode, style="cyan")
-        if self.dialogue is not None:
+        if self.selection is not None:
+            self.display.print(
+                f"model: {self.selection.model_name}   mode: {self.selection.mode_label}   "
+                f"context: {self.selection.context_label}",
+                style="cyan",
+            )
+        elif self.dialogue is not None:
             self.display.print(self.dialogue.status_line, style="cyan")
         self.display.print(
-            "Type help for the virtual command map. Safe exits: "
-            "exit --now, Ctrl+C twice, or close this window."
+            "Type /help for Agent commands or help for the virtual command map. "
+            "Safe exits: /exit, exit --now, Ctrl+C twice, or close this window."
         )
+        self.display.print("[fictional takeover only; no host command was executed]")
         self.display.print()
+
+    def _can_animate_install(self) -> bool:
+        return bool(
+            self.display.is_tty
+            and self.display.color_enabled
+            and not self.display.low_stimulation
+            and not self.safe_mode
+        )
 
     def _can_use_readline(self) -> bool:
         if self.stdin is None:
             return True
         return not self.stdin.closed and self.stdin.isatty()
 
-    @staticmethod
-    def _configure_readline() -> None:
+    def _configure_readline(self) -> None:
         try:
             import readline
         except ImportError:
@@ -261,7 +446,13 @@ class Repl:
             except ImportError:
                 return
 
-        readline.set_completer(_command_completer)
+        commands = tuple(sorted(set(_READLINE_COMMANDS).union(self.slash_registry.names())))
+
+        def completer(text: str, state: int) -> str | None:
+            matches = [command for command in commands if command.startswith(text.lower())]
+            return matches[state] if state < len(matches) else None
+
+        readline.set_completer(completer)
         readline.set_completer_delims(" \t\n")
         readline.parse_and_bind("tab: complete")
         with contextlib.suppress(AttributeError, OSError):

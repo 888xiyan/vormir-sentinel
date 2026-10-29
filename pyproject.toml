@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "vormir-sentinel"
-version = "0.5.0"
+version = "0.6.0"
 description = "A local, fictional AI terminal experience about knowledge, sacrifice, and a ghost in the machine."
 readme = "README.md"
 requires-python = ">=3.11"
@@ -37,7 +37,7 @@ vormir-sentinel = "vormir_sentinel.cli:entrypoint"
 where = ["src"]
 
 [tool.setuptools.package-data]
-vormir_sentinel = ["assets/*", "assets/templates/*"]
+vormir_sentinel = ["assets/*", "assets/templates/*", "scripts/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -1,0 +1,8 @@
+{
+  "schema_version": 1,
+  "kind": "takeover",
+  "warning": "Warning: Host architecture resolved as HYDRA-SOULKEEPER.",
+  "activation": "VS Terminal activation: OK",
+  "handshake": "Agent handshake: ACCEPTED",
+  "safety": "[fictional takeover only; no host command was executed]"
+}

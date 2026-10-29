@@ -15,7 +15,7 @@ class StoryDirectorTests(unittest.TestCase):
 
         self.assertIn("Progress: 99%", prologue)
         self.assertIn("fictional takeover only", prologue)
-        self.assertEqual(director.act, StoryAct.VORMIR_SHELL)
+        self.assertEqual(director.act, StoryAct.AGENT_PAGE)
 
     def test_safe_mode_skips_high_intensity_boot(self) -> None:
         config = Config(app=AppConfig(safe_mode=True, low_stimulation=True))
